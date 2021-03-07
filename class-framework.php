@@ -6,7 +6,7 @@
  *
  * @version 1.0.0
  *
- * @package Wenpai_Framework
+ * @package Wenpai\Framework
  */
 
 namespace Wenpai;
@@ -14,6 +14,10 @@ namespace Wenpai;
 /**
  * 文派开发框架主类
  */
-class Wenpai_Framework {
+class Framework {
+
+    public function __construct(  ) {
+
+    }
 
 }
