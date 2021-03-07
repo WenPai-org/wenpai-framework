@@ -27,6 +27,7 @@ if ( !class_exists( 'Framework' ) ) {
          */
         private static $args = array(
             'admin_options' => array(),
+            'sections' => array(),
         );
 
         /**
@@ -73,6 +74,29 @@ if ( !class_exists( 'Framework' ) ) {
          */
         public static function create_options( $prefix, $args ) {
             self::$args['admin_options'][$prefix] = $args;
+        }
+
+        /**
+         * 创建设置项组
+         *
+         * @since 1.0.0
+         *
+         * @param string $prefix 设置项前缀
+         * @param array $args {[
+         *     选项卡信息
+         *
+         *     @type string $title 设置选项卡标题
+         *     @type array $fields {[
+         *         一个选项卡中可以包含多个设置项
+         *
+         *         @type string $id    设置项ID
+         *         @type string $type  设置项类型
+         *         @type string $title 设置项标题
+         *     ]}
+         * ]}
+         */
+        public static function create_section( $prefix, $args ) {
+            self::$args['sections'][$prefix][] = $args;
         }
 
     }
