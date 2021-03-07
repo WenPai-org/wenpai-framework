@@ -22,6 +22,7 @@ if ( !class_exists( 'Framework' ) ) {
          * 存储全局的设置项数据
          *
          * @since 1.0.0
+         *
          * @var array
          */
         private static $args = array(
@@ -61,8 +62,11 @@ if ( !class_exists( 'Framework' ) ) {
          * 创建设置页
          *
          * @since 1.0.0
-         * @param string $prefix
+         *
+         * @param string $prefix 设置页前缀
          * @param array $args {
+         *     菜单信息
+         *
          *     @type string $menu_title 菜单标题
          *     @type string $menu_slug  菜单Slug
          * }
