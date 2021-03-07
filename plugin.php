@@ -20,4 +20,20 @@ require_once 'class-framework.php';
 Framework::create_options( 'wenpai_framework_example', array(
     'menu_title' => '文派开发框架',
     'menu_slug' => 'wenpai_framework'
-]);
+) );
+
+/**
+ * 创建设置组
+ */
+Framework::create_section( 'wenpai_framework_example', array(
+    array(
+        'title'  => '选项卡一',
+        'fields' => array(
+            array(
+                'id'    => 'text',
+                'type'  => 'text',
+                'title' => '文本框',
+            ),
+        )
+    )
+) );
