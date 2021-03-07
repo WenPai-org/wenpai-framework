@@ -35,5 +35,14 @@ Framework::create_section( 'wenpai_framework_example', array(
                 'title' => '文本框',
             ),
         )
+    ), array(
+        'title'  => '选项卡二',
+        'fields' => array(
+            array(
+                'id'    => 'text',
+                'type'  => 'text',
+                'title' => '文本框',
+            ),
+        )
     )
 ) );
