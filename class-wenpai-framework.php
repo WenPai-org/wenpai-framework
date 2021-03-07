@@ -6,10 +6,10 @@
  *
  * @version 1.0.0
  *
- * @package Wenpai\Wenpai_Framework
+ * @package Wenpai_Framework
  */
 
-namespace Wenpai\Wenpai_Framework;
+namespace Wenpai;
 
 /**
  * 文派开发框架主类
