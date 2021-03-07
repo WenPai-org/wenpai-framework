@@ -53,7 +53,11 @@ if ( !class_exists( 'Framework' ) ) {
                     'manage_options',
                     $item['menu_slug'],
                     function () use ($prefix) {
+                        echo '<div class="wrap">';
+
                         self::_show_navigation( $prefix );
+
+                        echo '</div>';
                     }
                 );
             }
