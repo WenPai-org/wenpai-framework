@@ -45,18 +45,41 @@ if ( !class_exists( 'Framework' ) ) {
          * @since 1.0.0
          */
         public static function _create_admin_menu() {
-            foreach ( self::$args['admin_options'] as $item ) {
+            foreach ( self::$args['admin_options'] as $prefix => $item ) {
                 add_submenu_page(
                     'options-general.php',
                     $item['menu_title'],
                     $item['menu_title'],
                     'manage_options',
                     $item['menu_slug'],
-                    function () {
-                        echo 'test';
+                    function () use ($prefix) {
+                        self::_show_navigation( $prefix );
                     }
                 );
             }
+        }
+
+        /**
+         * 向页面打印选项卡顶栏的HTML
+         *
+         * @param string $prefix 设置页的前缀
+         */
+        private static function _show_navigation( $prefix ) {
+            $html = '<h2 class="nav-tab-wrapper">';
+
+            $count = count( self::$args['sections'][$prefix] );
+
+            if ( 1 === $count ) {
+                return;
+            }
+
+            foreach ( self::$args['sections'][$prefix] as $tab ) {
+                $html .= sprintf( '<a href="#%1$s" class="nav-tab" id="%1$s-tab">%2$s</a>', $tab['id'], $tab['title'] );
+            }
+
+            $html .= '</h2>';
+
+            echo $html;
         }
 
         /**
