@@ -14,7 +14,10 @@ use Wenpai\Framework;
 
 require_once 'class-framework.php';
 
-Framework::create_options('wenpai_framework_example', [
+/**
+ * 创建设置页
+ */
+Framework::create_options( 'wenpai_framework_example', array(
     'menu_title' => '文派开发框架',
     'menu_slug' => 'wenpai_framework'
 ]);
