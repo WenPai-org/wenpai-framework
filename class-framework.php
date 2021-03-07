@@ -96,7 +96,7 @@ if ( !class_exists( 'Framework' ) ) {
          * ]}
          */
         public static function create_section( $prefix, $args ) {
-            self::$args['sections'][$prefix][] = $args;
+            self::$args['sections'][$prefix] = array_merge( (array)self::$args['sections'][$prefix], $args );
         }
 
     }
