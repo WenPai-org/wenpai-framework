@@ -14,10 +14,12 @@ namespace Wenpai;
 /**
  * 文派开发框架主类
  */
-class Framework {
+if ( !class_exists( 'Framework' ) ) {
+    class Framework {
 
-    public function __construct(  ) {
+        public function __construct() {
+
+        }
 
     }
-
 }
