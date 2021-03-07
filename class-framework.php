@@ -11,23 +11,36 @@
 
 namespace Wenpai;
 
-/**
- * 文派开发框架主类
- */
 if ( !class_exists( 'Framework' ) ) {
 
+    /**
+     * 文派开发框架主类
+     */
     class Framework {
 
+        /**
+         * 存储全局的设置项数据
+         *
+         * @since 1.0.0
+         * @var array
+         */
         private static $args = array(
             'admin_options' => array(),
         );
 
+        /**
+         * 框架初始化
+         *
+         * @since 1.0.0
+         */
         public static function init() {
             add_action( 'admin_menu', array( __CLASS__, '_create_admin_menu' ) );
         }
 
         /**
          * 创建后台管理员菜单
+         *
+         * @since 1.0.0
          */
         public static function _create_admin_menu() {
             foreach ( self::$args['admin_options'] as $item ) {
@@ -48,7 +61,6 @@ if ( !class_exists( 'Framework' ) ) {
          * 创建设置页
          *
          * @since 1.0.0
-         *
          * @param string $prefix
          * @param array $args {
          *     @type string $menu_title 菜单标题
