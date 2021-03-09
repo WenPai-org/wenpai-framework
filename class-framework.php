@@ -82,7 +82,7 @@ if ( !class_exists( 'Framework' ) ) {
          *
          * @param string $prefix 设置页的前缀
          */
-        private static function _show_navigation( $prefix ) {
+        private static function _show_navigation( string $prefix ) {
             $html = '<h2 class="nav-tab-wrapper">';
 
             $count = count( self::$args['sections'][$prefix] );
@@ -113,7 +113,7 @@ if ( !class_exists( 'Framework' ) ) {
          *     @type string $menu_slug  菜单Slug
          * }
          */
-        public static function create_options( $prefix, $args ) {
+        public static function create_options( string $prefix, array $args ) {
             self::$args['admin_options'][$prefix] = $args;
         }
 
@@ -136,8 +136,8 @@ if ( !class_exists( 'Framework' ) ) {
          *     ]}
          * ]}
          */
-        public static function create_section( $prefix, $args ) {
-            self::$args['sections'][$prefix] = array_merge( (array)self::$args['sections'][$prefix], $args );
+        public static function create_section( string $prefix, array $args ) {
+            self::$args['sections'][$prefix] = array_merge( self::$args['sections'][$prefix] ?? [], $args );
         }
 
         /**
