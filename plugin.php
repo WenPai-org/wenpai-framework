@@ -27,6 +27,7 @@ Framework::create_options( 'wenpai_framework_example', array(
  */
 Framework::create_section( 'wenpai_framework_example', array(
     array(
+        'id'     => 'one',
         'title'  => '选项卡一',
         'fields' => array(
             array(
@@ -36,6 +37,7 @@ Framework::create_section( 'wenpai_framework_example', array(
             ),
         )
     ), array(
+        'id'     => 'two',
         'title'  => '选项卡二',
         'fields' => array(
             array(
