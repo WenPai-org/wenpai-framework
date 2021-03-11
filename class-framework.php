@@ -68,6 +68,8 @@ if ( !class_exists( 'Framework' ) ) {
 
         /**
          * 向WordPress管理后台注入框架依赖的CSS与JS
+         *
+         * @since 1.0.0
          */
         public static function _admin_enqueue_scripts() {
             wp_enqueue_style( 'wp-color-picker' );
@@ -81,6 +83,8 @@ if ( !class_exists( 'Framework' ) ) {
 
         /**
          * 向页面打印选项卡顶栏的HTML
+         *
+         * @since 1.0.0
          *
          * @param string $prefix 设置页的前缀
          */
@@ -144,6 +148,8 @@ if ( !class_exists( 'Framework' ) ) {
 
         /**
          * 输出依赖的内联JS
+         *
+         * @since 1.0.0
          */
         public static function _script() {
             echo <<<EOT
@@ -224,6 +230,8 @@ EOT;
 
         /**
          * 设置项初始化
+         *
+         * @since 1.0.0
          */
         public static function _settings_init() {
             foreach ( self::$args['sections'] as $item ) {
@@ -248,6 +256,8 @@ EOT;
         /**
          * 输出HTML表单
          *
+         * @since 1.0.0
+         *
          * @param string $prefix 区块前缀
          */
         private static function _show_forms( string $prefix ) {
@@ -271,6 +281,8 @@ EOT;
         /**
          * 获取某个字段被HTML包裹的描述信息
          *
+         * @since 1.0.0
+         *
          * @param array $args 字段信息的数组，直接原样传入即可
          *
          * @return string 被HTML包裹的描述信息
@@ -287,6 +299,8 @@ EOT;
 
         /**
          * Text组件
+         *
+         * @since 1.0.0
          *
          * @param array $args {
          *     @type string $name        字段名
