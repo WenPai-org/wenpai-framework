@@ -300,7 +300,7 @@ EOT;
             $size        = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
             $placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
 
-            $html        = sprintf( '<input type="text" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"%5$s/>', $size, $args['section'], $args['id'], $value, $placeholder );
+            $html        = sprintf( '<input type="text" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"%5$s/>', $size, $args['section'], $args['name'], $value, $placeholder );
             $html       .= self::_get_field_description( $args );
 
             echo $html;
