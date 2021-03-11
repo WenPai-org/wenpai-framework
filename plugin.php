@@ -31,9 +31,10 @@ Framework::create_section( 'wenpai_framework_example', array(
         'title'  => '选项卡一',
         'fields' => array(
             array(
-                'id'    => 'text',
-                'type'  => 'text',
-                'name' => '文本框',
+                'id'          => 'text',
+                'type'        => 'text',
+                'name'        => '文本框',
+                'placeholder' => '我是文本框',
             ),
         )
     ), array(
@@ -41,9 +42,10 @@ Framework::create_section( 'wenpai_framework_example', array(
         'title'  => '选项卡二',
         'fields' => array(
             array(
-                'id'    => 'text',
-                'type'  => 'text',
-                'name' => '文本框',
+                'id'          => 'text',
+                'type'        => 'text',
+                'name'        => '文本框',
+                'placeholder' => '我是文本框',
             ),
         )
     )
