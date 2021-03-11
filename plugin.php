@@ -33,7 +33,7 @@ Framework::create_section( 'wenpai_framework_example', array(
             array(
                 'id'    => 'text',
                 'type'  => 'text',
-                'title' => '文本框',
+                'name' => '文本框',
             ),
         )
     ), array(
@@ -43,7 +43,7 @@ Framework::create_section( 'wenpai_framework_example', array(
             array(
                 'id'    => 'text',
                 'type'  => 'text',
-                'title' => '文本框',
+                'name' => '文本框',
             ),
         )
     )
