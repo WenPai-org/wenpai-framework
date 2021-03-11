@@ -298,6 +298,26 @@ EOT;
         }
 
         /**
+         * 获取设置项值
+         *
+         * @param string $option  设置项ID
+         * @param string $prefix  所属的应用程序前缀
+         * @param string $section 设置组ID
+         * @param string $default 默认值
+         *
+         * @return mixed|string
+         */
+        public static function get_option(string $option, string $prefix, string $section, $default = ''): string {
+            $options = get_option( "{$prefix}_{$section}" );
+
+            if ( isset( $options[$option] ) ) {
+                return $options[$option];
+            }
+
+            return $default;
+        }
+
+        /**
          * Text组件
          *
          * @since 1.0.0
