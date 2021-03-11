@@ -15,9 +15,14 @@ use Wenpai\Framework;
 require_once 'class-framework.php';
 
 /**
+ * 声明设置项前缀标识
+ */
+define('EXAMPLE_PREFIX', 'wenpai_framework_example');
+
+/**
  * 创建设置页
  */
-Framework::create_options( 'wenpai_framework_example', array(
+Framework::create_options( EXAMPLE_PREFIX, array(
     'menu_title' => '文派开发框架',
     'menu_slug' => 'wenpai_framework'
 ) );
@@ -25,7 +30,7 @@ Framework::create_options( 'wenpai_framework_example', array(
 /**
  * 创建设置组
  */
-Framework::create_section( 'wenpai_framework_example', array(
+Framework::create_section( EXAMPLE_PREFIX, array(
     array(
         'id'     => 'one',
         'title'  => '选项卡一',
