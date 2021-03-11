@@ -255,10 +255,10 @@ EOT;
             foreach ( self::$args['sections'][$prefix] as $item ) {
                 echo '<div id="' . $item['id'] . '" class="group" style="display: none;">';
                 echo '<form method="post" action="options.php">';
-                do_action( 'wsa_form_top_' . $item['id'], $item );
+                do_action( "{$prefix}_form_top_{$item['id']}", $item );
                 settings_fields( $item['id'] );
                 do_settings_sections( $item['id'] );
-                do_action( 'wsa_form_bottom_' . $item['id'], $item );
+                do_action( "{$prefix}_form_bottom_{$item['id']}", $item );
                 echo '<div style="padding-left: 10px">';
                 submit_button();
                 echo '</div>';
