@@ -233,8 +233,10 @@ EOT;
 
                     foreach ($section['fields'] as $field) {
                         $args = array(
-                            'name'    => $field['id'],
-                            'section' => $section['id'],
+                            'name'        => $field['id'],
+                            'section'     => $section['id'],
+                            'size'        => $field['size'],
+                            'placeholder' => $field['placeholder'],
                         );
 
                         add_settings_field( "{$section['id']}[{$field['id']}]", $field['name'], [__CLASS__, 'callback_' . $field['type']], $section['id'], $section['id'], $args );
@@ -298,7 +300,7 @@ EOT;
             $size        = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
             $placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
 
-            $html        = sprintf( '<input type="text" class="%1$s-text" id="%2$s[%4$s]" name="%2$s[%3$s]" value="%4$s" placeholder="%5$s"/>', $size, $args['section'], $args['id'], $value, $placeholder );
+            $html        = sprintf( '<input type="text" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"%5$s/>', $size, $args['section'], $args['id'], $value, $placeholder );
             $html       .= self::_get_field_description( $args );
 
             echo $html;
