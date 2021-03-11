@@ -36,6 +36,7 @@ if ( !class_exists( 'Framework' ) ) {
          * @since 1.0.0
          */
         public static function init() {
+            add_action( 'admin_init', array( __CLASS__, '_settings_init' ) );
             add_action( 'admin_menu', array( __CLASS__, '_create_admin_menu' ) );
             add_action( 'admin_enqueue_scripts', array( __CLASS__, '_admin_enqueue_scripts' ) );
         }
@@ -57,6 +58,7 @@ if ( !class_exists( 'Framework' ) ) {
                         echo '<div class="wrap">';
 
                         self::_show_navigation( $prefix );
+                        self::_show_forms( $prefix );
 
                         echo '</div>';
                     }
@@ -141,7 +143,7 @@ if ( !class_exists( 'Framework' ) ) {
         }
 
         /**
-         * @return string
+         * 输出依赖的内联JS
          */
         public static function _script() {
             echo <<<EOT
@@ -218,6 +220,88 @@ if ( !class_exists( 'Framework' ) ) {
               });
               </script>
 EOT;
+        }
+
+        /**
+         * 设置项初始化
+         */
+        public static function _settings_init() {
+            foreach ( self::$args['sections'] as $item ) {
+                foreach ( $item as $section ) {
+                    register_setting( $section['id'], $section['id'] );
+                    add_settings_section( $section['id'], $section['title'], null, $section['id'] );
+
+                    foreach ($section['fields'] as $field) {
+                        $args = array(
+                            'name'    => $field['id'],
+                            'section' => $section['id'],
+                        );
+
+                        add_settings_field( "{$section['id']}[{$field['id']}]", $field['name'], [__CLASS__, 'callback_' . $field['type']], $section['id'], $section['id'], $args );
+                    }
+                }
+            }
+        }
+
+        /**
+         * 输出HTML表单
+         *
+         * @param string $prefix 区块前缀
+         */
+        private static function _show_forms( string $prefix ) {
+            echo '<div class="metabox-holder">';
+            foreach ( self::$args['sections'][$prefix] as $item ) {
+                echo '<div id="' . $item['id'] . '" class="group" style="display: none;">';
+                echo '<form method="post" action="options.php">';
+                do_action( 'wsa_form_top_' . $item['id'], $item );
+                settings_fields( $item['id'] );
+                do_settings_sections( $item['id'] );
+                do_action( 'wsa_form_bottom_' . $item['id'], $item );
+                echo '<div style="padding-left: 10px">';
+                submit_button();
+                echo '</div>';
+                echo '</form>';
+                echo '</div>';
+            }
+            echo '</div>';
+        }
+
+        /**
+         * 获取某个字段被HTML包裹的描述信息
+         *
+         * @param array $args 字段信息的数组，直接原样传入即可
+         *
+         * @return string 被HTML包裹的描述信息
+         */
+        private static function _get_field_description( array $args ): string {
+            if ( ! empty( $args['desc'] ) ) {
+                $desc = sprintf( '<p class="description">%s</p>', $args['desc'] );
+            } else {
+                $desc = '';
+            }
+
+            return $desc;
+        }
+
+        /**
+         * Text组件
+         *
+         * @param array $args {
+         *     @type string $name        字段名
+         *     @type string $section     区块ID
+         *     @type string $size        大小
+         *     @type string $placeholder HTML placeholder属性值
+         * }
+         */
+        public static function callback_text( array $args ) {
+            $value       = get_option($args['section'])[$args['name']];
+            $size        = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
+            $placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
+
+            $html        = sprintf( '<input type="text" class="%1$s-text" id="%2$s[%4$s]" name="%2$s[%3$s]" value="%4$s" placeholder="%5$s"/>', $size, $args['section'], $args['id'], $value, $placeholder );
+            $html       .= self::_get_field_description( $args );
+
+            echo $html;
         }
 
     }
