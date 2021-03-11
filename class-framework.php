@@ -234,20 +234,23 @@ EOT;
          * @since 1.0.0
          */
         public static function _settings_init() {
-            foreach ( self::$args['sections'] as $item ) {
-                foreach ( $item as $section ) {
-                    register_setting( $section['id'], $section['id'] );
-                    add_settings_section( $section['id'], $section['title'], null, $section['id'] );
+            foreach ( self::$args['sections'] as $prefix => $sections ) {
+                foreach ( $sections as $section ) {
+                    $section_id = "{$prefix}_{$section['id']}";
+
+                    register_setting( $section_id, $section_id );
+                    add_settings_section( $section_id, $section['title'], null, $section_id );
 
                     foreach ($section['fields'] as $field) {
                         $args = array(
+                            'prefix'      => $prefix,
                             'name'        => $field['id'],
                             'section'     => $section['id'],
                             'size'        => $field['size'],
                             'placeholder' => $field['placeholder'],
                         );
 
-                        add_settings_field( "{$section['id']}[{$field['id']}]", $field['name'], [__CLASS__, 'callback_' . $field['type']], $section['id'], $section['id'], $args );
+                        add_settings_field( "{$section_id}[{$field['id']}]", $field['name'], [__CLASS__, 'callback_' . $field['type']], $section_id, $section_id, $args );
                     }
                 }
             }
@@ -266,8 +269,8 @@ EOT;
                 echo '<div id="' . $item['id'] . '" class="group" style="display: none;">';
                 echo '<form method="post" action="options.php">';
                 do_action( "{$prefix}_form_top_{$item['id']}", $item );
-                settings_fields( $item['id'] );
-                do_settings_sections( $item['id'] );
+                settings_fields( "{$prefix}_{$item['id']}" );
+                do_settings_sections( "{$prefix}_{$item['id']}" );
                 do_action( "{$prefix}_form_bottom_{$item['id']}", $item );
                 echo '<div style="padding-left: 10px">';
                 submit_button();
@@ -330,11 +333,12 @@ EOT;
          * }
          */
         public static function callback_text( array $args ) {
-            $value       = get_option($args['section'])[$args['name']];
+            $value       = self::get_option($args['name'], $args['prefix'], $args['section']);
             $size        = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
             $placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
 
-            $html        = sprintf( '<input type="text" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"%5$s/>', $size, $args['section'], $args['name'], $value, $placeholder );
+            $html        = sprintf( '<input type="text" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"%5$s/>',
+                $size, "{$args['prefix']}_{$args['section']}", $args['name'], $value, $placeholder );
             $html       .= self::_get_field_description( $args );
 
             echo $html;
