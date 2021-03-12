@@ -11,6 +11,8 @@ namespace Wenpai\Framework;
 
 if ( !class_exists( 'Setting' ) ) {
 
+    require_once 'class-fields.php';
+
     /**
      * 设置页生成类
      *
@@ -252,7 +254,7 @@ EOT;
                             'placeholder' => $field['placeholder'],
                         );
 
-                        add_settings_field( "{$section_id}[{$field['id']}]", $field['name'], [__CLASS__, 'callback_' . $field['type']], $section_id, $section_id, $args );
+                        add_settings_field( "{$section_id}[{$field['id']}]", $field['name'], array( Fields::class, 'callback_' . $field['type'] ), $section_id, $section_id, $args );
                     }
                 }
             }
@@ -281,69 +283,6 @@ EOT;
                 echo '</div>';
             }
             echo '</div>';
-        }
-
-        /**
-         * 获取某个字段被HTML包裹的描述信息
-         *
-         * @since 1.0.0
-         *
-         * @param array $args 字段信息的数组，直接原样传入即可
-         *
-         * @return string 被HTML包裹的描述信息
-         */
-        private static function _get_field_description( array $args ): string {
-            if ( ! empty( $args['desc'] ) ) {
-                $desc = sprintf( '<p class="description">%s</p>', $args['desc'] );
-            } else {
-                $desc = '';
-            }
-
-            return $desc;
-        }
-
-        /**
-         * 获取设置项值
-         *
-         * @param string $option  设置项ID
-         * @param string $prefix  所属的应用程序前缀
-         * @param string $section 设置组ID
-         * @param string $default 默认值
-         *
-         * @return mixed|string
-         */
-        public static function get_option(string $option, string $prefix, string $section, $default = ''): string {
-            $options = get_option( "{$prefix}_{$section}" );
-
-            if ( isset( $options[$option] ) ) {
-                return $options[$option];
-            }
-
-            return $default;
-        }
-
-        /**
-         * Text组件
-         *
-         * @since 1.0.0
-         *
-         * @param array $args {
-         *     @type string $name        字段名
-         *     @type string $section     区块ID
-         *     @type string $size        大小
-         *     @type string $placeholder HTML placeholder属性值
-         * }
-         */
-        public static function callback_text( array $args ) {
-            $value       = self::get_option($args['name'], $args['prefix'], $args['section']);
-            $size        = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
-            $placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
-
-            $html        = sprintf( '<input type="text" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"%5$s/>',
-                $size, "{$args['prefix']}_{$args['section']}", $args['name'], $value, $placeholder );
-            $html       .= self::_get_field_description( $args );
-
-            echo $html;
         }
 
     }
