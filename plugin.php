@@ -10,9 +10,9 @@
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  */
 
-use Wenpai\Framework;
+use Wenpai\Framework\Setting;
 
-require_once 'class-framework.php';
+require_once 'framework/class-setting.php';
 
 /**
  * 声明设置项前缀标识
@@ -22,7 +22,7 @@ define('EXAMPLE_PREFIX', 'wenpai_framework_example');
 /**
  * 创建设置页
  */
-Framework::create_options( EXAMPLE_PREFIX, array(
+Setting::create_options( EXAMPLE_PREFIX, array(
     'menu_title' => '文派开发框架',
     'menu_slug' => 'wenpai_framework'
 ) );
@@ -30,7 +30,7 @@ Framework::create_options( EXAMPLE_PREFIX, array(
 /**
  * 创建设置组
  */
-Framework::create_section( EXAMPLE_PREFIX, array(
+Setting::create_section( EXAMPLE_PREFIX, array(
     array(
         'id'     => 'one',
         'title'  => '选项卡一',

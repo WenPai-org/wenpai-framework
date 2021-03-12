@@ -1,22 +1,24 @@
 <?php
 /**
- * 文派开发框架
- *
- * 轻量优雅的WordPress开发框架
+ * 设置页生成类
  *
  * @version 1.0.0
  *
  * @package Wenpai\Framework
  */
 
-namespace Wenpai;
+namespace Wenpai\Framework;
 
-if ( !class_exists( 'Framework' ) ) {
+if ( !class_exists( 'Setting' ) ) {
 
     /**
-     * 文派开发框架主类
+     * 设置页生成类
+     *
+     * 该类提供一组方法帮助你生成一个基于WordPress Settings API的设置页面
+     *
+     * @since 1.0.0
      */
-    class Framework {
+    class Setting {
 
         /**
          * 存储全局的设置项数据
@@ -346,6 +348,6 @@ EOT;
 
     }
 
-    Framework::init();
+    Setting::init();
 
 }
