@@ -11,8 +11,10 @@
  */
 
 use Wenpai\Framework\Setting;
+use Wenpai\Framework\Widget;
 
 require_once 'framework/class-setting.php';
+require_once 'framework/class-widget.php';
 
 /**
  * 声明设置项前缀标识
@@ -41,7 +43,7 @@ Setting::create_section( EXAMPLE_PREFIX, array(
                 'name'        => '文本框',
                 'placeholder' => '我是文本框',
             ),
-        )
+        ),
     ), array(
         'id'     => 'two',
         'title'  => '选项卡二',
@@ -52,6 +54,24 @@ Setting::create_section( EXAMPLE_PREFIX, array(
                 'name'        => '文本框',
                 'placeholder' => '我是文本框',
             ),
-        )
-    )
+        ),
+    ),
+) );
+
+/**
+ * 创建小工具
+ */
+Widget::create( EXAMPLE_PREFIX, array(
+    'id'          => 'one',
+    'title'       => '小工具一',
+    'classname'   => 'widget-one',
+    'description' => '这是一个小工具',
+    'fields'      => array(
+        array(
+            'id'          => 'text',
+            'type'        => 'text',
+            'name'        => '文本框',
+            'placeholder' => '我是文本框',
+        ),
+    ),
 ) );
