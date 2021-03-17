@@ -56,11 +56,23 @@ if ( !class_exists( 'Widget' ) ) {
             echo 'hello,world';
         }
 
-        public function form($instance): string {
-            echo 'asf';
+        public function form( $instance ): string {
+            foreach ( $this->args['fields'] as $field ) {
+                $field['prefix']  = $this->prefix;
+                $field['section'] = $this->args['id'] ?? '';
+                $args = Fields::parse_field_array( $field );
+
+                echo '<p>';
+                echo '<label>' . $args['name'] . ':</label>';
+                call_user_func( array( Fields::class, 'callback_' . $args['type'] ), $args );
+                echo '</p>';
+            }
+
+            return 'noform';
         }
 
-        public function update($new_instance, $old_instance): array {
+        public function update( $new_instance, $old_instance ): array {
+            return array();
         }
 
     }
