@@ -238,6 +238,8 @@ EOT;
          * @since 1.0.0
          */
         public static function _settings_init() {
+            $fields_obj = new Fields();
+
             foreach ( self::$args['sections'] as $prefix => $sections ) {
                 foreach ( $sections as $section ) {
                     $section_id = "{$prefix}_{$section['id']}";
@@ -248,9 +250,9 @@ EOT;
                     foreach ($section['fields'] as $field) {
                         $field['prefix'] = $prefix;
                         $field['prefix'] = $section['id'] ?? '';
-                        $args = Fields::parse_field_array( $field );
+                        $args = $fields_obj->parse_field_array( $field );
 
-                        add_settings_field( "{$section_id}[{$field['id']}]", $field['name'], array( Fields::class, 'callback_' . $field['type'] ), $section_id, $section_id, $args );
+                        add_settings_field( "{$section_id}[{$field['id']}]", $field['name'], array( $fields_obj, 'callback_' . $field['type'] ), $section_id, $section_id, $args );
                     }
                 }
             }

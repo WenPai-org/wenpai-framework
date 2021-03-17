@@ -57,14 +57,16 @@ if ( !class_exists( 'Widget' ) ) {
         }
 
         public function form( $instance ): string {
+            $fields_obj = new Fields();
+
             foreach ( $this->args['fields'] as $field ) {
                 $field['prefix']  = $this->prefix;
                 $field['section'] = $this->args['id'] ?? '';
-                $args = Fields::parse_field_array( $field );
+                $args = $fields_obj->parse_field_array( $field );
 
                 echo '<p>';
                 echo '<label>' . $args['name'] . ':</label>';
-                call_user_func( array( Fields::class, 'callback_' . $args['type'] ), $args );
+                call_user_func( array( $fields_obj, 'callback_' . $args['type'] ), $args );
                 echo '</p>';
             }
 

@@ -29,7 +29,7 @@ if ( !class_exists( 'Fields' ) ) {
          *
          * @return string 被HTML包裹的描述信息
          */
-        private static function _get_field_description( array $args ): string {
+        private function _get_field_description( array $args ): string {
             if ( ! empty( $args['desc'] ) ) {
                 $desc = sprintf( '<p class="description">%s</p>', $args['desc'] );
             } else {
@@ -49,7 +49,7 @@ if ( !class_exists( 'Fields' ) ) {
          *
          * @return mixed|string
          */
-        public static function get_option(string $option, string $prefix, string $section, $default = ''): string {
+        public function get_option(string $option, string $prefix, string $section, $default = ''): string {
             $options = get_option( "{$prefix}_{$section}" );
 
             if ( isset( $options[$option] ) ) {
@@ -66,7 +66,7 @@ if ( !class_exists( 'Fields' ) ) {
          *
          * @return array 返回格式化后的数据
          */
-        public static function parse_field_array( array $args ): array {
+        public function parse_field_array( array $args ): array {
             $defaults = array(
                 'name'        => '',
                 'prefix'      => '',
@@ -91,7 +91,7 @@ if ( !class_exists( 'Fields' ) ) {
          *     @type string $placeholder HTML placeholder属性值
          * }
          */
-        public static function callback_text( array $args ) {
+        public function callback_text( array $args ) {
             $value       = self::get_option($args['id'], $args['prefix'], $args['section']);
             $size        = isset( $args['size'] ) && !empty( $args['size'] ) ? $args['size'] : 'regular';
             $placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
