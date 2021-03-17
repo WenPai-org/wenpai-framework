@@ -62,7 +62,7 @@ Setting::create_section( EXAMPLE_PREFIX, array(
  * 创建小工具
  */
 Widget::create( EXAMPLE_PREFIX, array(
-    'id'          => 'one',
+    'id'          => 'one_width',
     'title'       => '小工具一',
     'classname'   => 'widget-one',
     'description' => '这是一个小工具',
