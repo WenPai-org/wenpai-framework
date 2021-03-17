@@ -92,12 +92,12 @@ if ( !class_exists( 'Fields' ) ) {
          * }
          */
         public static function callback_text( array $args ) {
-            $value       = self::get_option($args['name'], $args['prefix'], $args['section']);
-            $size        = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
+            $value       = self::get_option($args['id'], $args['prefix'], $args['section']);
+            $size        = isset( $args['size'] ) && !empty( $args['size'] ) ? $args['size'] : 'regular';
             $placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
 
             $html        = sprintf( '<input type="text" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"%5$s/>',
-                $size, "{$args['prefix']}_{$args['section']}", $args['name'], $value, $placeholder );
+                $size, "{$args['prefix']}_{$args['section']}", $args['id'], $value, $placeholder );
             $html       .= self::_get_field_description( $args );
 
             echo $html;
