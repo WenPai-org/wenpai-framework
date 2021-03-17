@@ -12,6 +12,8 @@ namespace Wenpai\Framework;
 use WP_Widget;
 use WP_Widget_Factory;
 
+require_once 'class-fields.php';
+
 if ( !class_exists( 'Widget' ) ) {
 
     /**
