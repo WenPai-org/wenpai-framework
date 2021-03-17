@@ -28,6 +28,8 @@ if ( !class_exists( 'Widget' ) ) {
         private $args = array();
 
         public function __construct( string $prefix, array $args ) {
+            $this->prefix = $prefix;
+
             $this->args = wp_parse_args( $args, array(
                 'id'          => '',
                 'title'       => '',
