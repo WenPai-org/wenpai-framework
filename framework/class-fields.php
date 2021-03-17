@@ -60,6 +60,26 @@ if ( !class_exists( 'Fields' ) ) {
         }
 
         /**
+         * 格式化字段信息数组
+         *
+         * @param array $args 要格式化的字段信息数组
+         *
+         * @return array 返回格式化后的数据
+         */
+        public static function parse_field_array( array $args ): array {
+            $defaults = array(
+                'name'        => '',
+                'prefix'      => '',
+                'id'          => '',
+                'section'     => '',
+                'size'        => '',
+                'placeholder' => '',
+            );
+
+            return wp_parse_args( $args, $defaults );
+        }
+
+        /**
          * Text组件
          *
          * @since 1.0.0

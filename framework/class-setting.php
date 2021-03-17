@@ -246,13 +246,9 @@ EOT;
                     add_settings_section( $section_id, $section['title'], null, $section_id );
 
                     foreach ($section['fields'] as $field) {
-                        $args = array(
-                            'prefix'      => $prefix,
-                            'name'        => $field['id'] ?? '',
-                            'section'     => $section['id'] ?? '',
-                            'size'        => $field['size'] ?? '',
-                            'placeholder' => $field['placeholder'] ?? '',
-                        );
+                        $field['prefix'] = $prefix;
+                        $field['prefix'] = $section['id'] ?? '';
+                        $args = Fields::parse_field_array( $field );
 
                         add_settings_field( "{$section_id}[{$field['id']}]", $field['name'], array( Fields::class, 'callback_' . $field['type'] ), $section_id, $section_id, $args );
                     }
