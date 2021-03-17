@@ -57,7 +57,7 @@ if ( !class_exists( 'Widget' ) ) {
         }
 
         public function form( $instance ): string {
-            $fields_obj = new Fields();
+            $fields_obj = new Fields( Fields::Widget );
 
             foreach ( $this->args['fields'] as $field ) {
                 $field['prefix']  = $this->prefix;
