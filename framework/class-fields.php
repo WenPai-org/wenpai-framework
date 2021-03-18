@@ -80,11 +80,12 @@ if ( !class_exists( 'Fields' ) ) {
             $defaults = array(
                 'name'        => '',
                 'prefix'      => '',
-                'id'          => '',
+                'label'       => '',
                 'section'     => '',
                 'size'        => '',
                 'placeholder' => '',
                 'value'       => '',
+                'desc'        => '',
             );
 
             return wp_parse_args( $args, $defaults );
