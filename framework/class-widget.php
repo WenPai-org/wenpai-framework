@@ -56,8 +56,8 @@ if ( !class_exists( 'Widget' ) ) {
         }
 
         public function widget( $args, $instance ) {
-            echo $args['before_widget'] ?? '';
-            if ( isset($instance['title']) && ! empty($instance['title']) ) {
+            echo str_replace( '">', ' '. $this->args['classname'] .'">', $args['before_widget'] ?? '' );
+            if ( isset( $instance['title'] ) && ! empty( $instance['title'] ) ) {
                 echo $args['before_title'] . $instance['title'] . $args['after_title'];
             }
             call_user_func( $this->widget_id, $instance );
@@ -70,7 +70,7 @@ if ( !class_exists( 'Widget' ) ) {
             foreach ( $this->args['fields'] as $field ) {
                 /** field数组的value和id字段的赋值顺序不可更改，具体原因稍微读下这两行代码就晓得了 */
                 $field['value'] = $instance[$field['name']] ?? '';
-                $field['name']    = $this->get_field_name( $field['name'] );
+                $field['name']  = $this->get_field_name( $field['name'] );
                 $args = $fields_obj->parse_field_array( $field );
 
                 echo '<p>';
