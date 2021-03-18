@@ -84,6 +84,7 @@ if ( !class_exists( 'Fields' ) ) {
                 'section'     => '',
                 'size'        => '',
                 'placeholder' => '',
+                'value'       => '',
             );
 
             return wp_parse_args( $args, $defaults );
@@ -102,17 +103,21 @@ if ( !class_exists( 'Fields' ) ) {
          * }
          */
         public function callback_text( array $args ) {
-            $value       = self::get_option($args['id'], $args['prefix'], $args['section']);
+            $value = $size = $id = '';
             if ( self::Setting === $this->type ) {
-                $size = isset($args['size']) && ! empty($args['size']) ? $args['size'] : 'regular';
+                $value = self::get_option($args['id'], $args['prefix'], $args['section']);
+                $size  = isset($args['size']) && ! empty($args['size']) ? $args['size'] : 'regular';
                 $size .= '-text';
+                $id    = "{$args['prefix']}_{$args['section']}[{$args['id']}]";
             } elseif ( self::Widget === $this->type ) {
-                $size = isset($args['size']) && ! empty($args['size']) ? $args['size'] : 'widefat';
+                $value = $args['value'];
+                $size  = isset($args['size']) && ! empty($args['size']) ? $args['size'] : 'widefat';
+                $id    = $args['id'];
             }
             $placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
 
-            $html        = sprintf( '<input type="text" class="%1$s" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"%5$s/>',
-                $size, "{$args['prefix']}_{$args['section']}", $args['id'], $value, $placeholder );
+            $html        = sprintf( '<input type="text" class="%1$s" id="%2$s" name="%2$s" value="%3$s"%4$s/>',
+                $size, $id, $value, $placeholder );
             $html       .= self::_get_field_description( $args );
 
             echo $html;
