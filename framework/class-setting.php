@@ -249,7 +249,7 @@ EOT;
 
                     foreach ($section['fields'] as $field) {
                         $field['prefix'] = $prefix;
-                        $field['prefix'] = $section['id'] ?? '';
+                        $field['section'] = $section['id'] ?? '';
                         $args = $fields_obj->parse_field_array( $field );
 
                         add_settings_field( "{$section_id}[{$field['id']}]", $field['name'], array( $fields_obj, 'callback_' . $field['type'] ), $section_id, $section_id, $args );
