@@ -44,6 +44,23 @@ Setting::create_section( EXAMPLE_PREFIX, array(
                 'placeholder' => '请输入文本',
                 'desc'        => '这是一个文本框',
             ),
+            array(
+                'name'    => 'select',
+                'label'   => '下拉框',
+                'desc'    => '这是一个下拉框',
+                'type'    => 'select',
+                'default' => 'no',
+                'options' => array(
+                    'yes' => 'Yes',
+                    'no'  => 'No'
+                )
+            ),
+            array(
+                'name'  => 'switcher_one',
+                'label' => '开关',
+                'desc'  => '这是一个开关',
+                'type'  => 'switcher'
+            ),
         ),
     ), array(
         'id'     => 'two',

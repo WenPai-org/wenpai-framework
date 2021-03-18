@@ -86,6 +86,8 @@ if ( !class_exists( 'Fields' ) ) {
                 'placeholder' => '',
                 'value'       => '',
                 'desc'        => '',
+                'default'     => '',
+                'options'     => '',
             );
 
             return wp_parse_args( $args, $defaults );
@@ -120,6 +122,35 @@ if ( !class_exists( 'Fields' ) ) {
             $html        = sprintf( '<input type="text" class="%1$s" id="%2$s" name="%2$s" value="%3$s"%4$s/>',
                 $size, $name, $value, $placeholder );
             $html       .= self::_get_field_description( $args );
+
+            echo $html;
+        }
+
+        function callback_select( $args ) {
+            $value = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['default'] );
+            $size  = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
+
+            $html  = sprintf( '<select class="%1$s" name="%2$s[%3$s]" id="%2$s[%3$s]">', $size, $args['section'], $args['id'] );
+
+            foreach ( $args['options'] as $key => $label ) {
+                $html .= sprintf( '<option value="%s"%s>%s</option>', $key, selected( $value, $key, false ), $label );
+            }
+
+            $html .= sprintf( '</select>' );
+            $html .= $this->_get_field_description( $args );
+
+            echo $html;
+        }
+
+        function callback_switcher( $args ) {
+            $value = self::get_option($args['name'], $args['prefix'], $args['section']);
+
+            $html  = '<fieldset>';
+            $html  .= sprintf( '<label for="wpuf-%1$s[%2$s]">', $args['section'], $args['name'] );
+            $html  .= sprintf( '<input type="hidden" name="%1$s[%2$s]" value="off" />', $args['section'], $args['name'] );
+            $html  .= sprintf( '<input type="checkbox" class="checkbox" id="wpuf-%1$s[%2$s]" name="%1$s[%2$s]" value="on" %3$s />', $args['section'], $args['name'], checked( $value, 'on', false ) );
+            $html  .= sprintf( '%1$s</label>', $args['desc'] );
+            $html  .= '</fieldset>';
 
             echo $html;
         }
