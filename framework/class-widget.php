@@ -70,7 +70,7 @@ if ( !class_exists( 'Widget' ) ) {
                 echo '</p>';
             }
 
-            return 'noform';
+            return '';
         }
 
         public function update( $new_instance, $old_instance ): array {
