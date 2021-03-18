@@ -104,21 +104,21 @@ if ( !class_exists( 'Fields' ) ) {
          * }
          */
         public function callback_text( array $args ) {
-            $value = $size = $id = '';
+            $value = $size = $name = '';
             if ( self::Setting === $this->type ) {
-                $value = self::get_option($args['id'], $args['prefix'], $args['section']);
+                $value = self::get_option($args['name'], $args['prefix'], $args['section']);
                 $size  = isset($args['size']) && ! empty($args['size']) ? $args['size'] : 'regular';
                 $size .= '-text';
-                $id    = "{$args['prefix']}_{$args['section']}[{$args['id']}]";
+                $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
             } elseif ( self::Widget === $this->type ) {
                 $value = $args['value'];
                 $size  = isset($args['size']) && ! empty($args['size']) ? $args['size'] : 'widefat';
-                $id    = $args['id'];
+                $name  = $args['name'];
             }
             $placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
 
             $html        = sprintf( '<input type="text" class="%1$s" id="%2$s" name="%2$s" value="%3$s"%4$s/>',
-                $size, $id, $value, $placeholder );
+                $size, $name, $value, $placeholder );
             $html       .= self::_get_field_description( $args );
 
             echo $html;

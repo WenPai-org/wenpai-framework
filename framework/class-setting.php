@@ -252,7 +252,7 @@ EOT;
                         $field['section'] = $section['id'] ?? '';
                         $args = $fields_obj->parse_field_array( $field );
 
-                        add_settings_field( "{$section_id}[{$field['id']}]", $field['name'], array( $fields_obj, 'callback_' . $field['type'] ), $section_id, $section_id, $args );
+                        add_settings_field( "{$section_id}[{$field['name']}]", $field['label'], array( $fields_obj, 'callback_' . $field['type'] ), $section_id, $section_id, $args );
                     }
                 }
             }
