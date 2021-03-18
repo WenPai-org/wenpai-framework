@@ -130,7 +130,7 @@ if ( !class_exists( 'Fields' ) ) {
             $value = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['default'] );
             $size  = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
 
-            $html  = sprintf( '<select class="%1$s" name="%2$s[%3$s]" id="%2$s[%3$s]">', $size, $args['section'], $args['id'] );
+            $html  = sprintf( '<select class="%1$s" name="%2$s[%3$s]" id="%2$s[%3$s]">', $size, $args['section'], $args['name'] );
 
             foreach ( $args['options'] as $key => $label ) {
                 $html .= sprintf( '<option value="%s"%s>%s</option>', $key, selected( $value, $key, false ), $label );
