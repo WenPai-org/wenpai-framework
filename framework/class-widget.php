@@ -61,12 +61,12 @@ if ( !class_exists( 'Widget' ) ) {
 
             foreach ( $this->args['fields'] as $field ) {
                 /** field数组的value和id字段的赋值顺序不可更改，具体原因稍微读下这两行代码就晓得了 */
-                $field['value'] = $instance[$field['id']] ?? '';
-                $field['id']    = $this->get_field_name( $field['id'] );
+                $field['value'] = $instance[$field['name']] ?? '';
+                $field['name']    = $this->get_field_name( $field['name'] );
                 $args = $fields_obj->parse_field_array( $field );
 
                 echo '<p>';
-                echo "<label for='{$field['id']}'>{$args['name']}:</label>";
+                echo "<label for='{$field['name']}'>{$args['label']}:</label>";
                 call_user_func( array( $fields_obj, 'callback_' . $args['type'] ), $args );
                 echo '</p>';
             }
