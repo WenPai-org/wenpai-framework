@@ -50,10 +50,11 @@ Setting::create_section( EXAMPLE_PREFIX, array(
         'title'  => '选项卡二',
         'fields' => array(
             array(
-                'id'          => 'text',
+                'name'        => 'text_one',
                 'type'        => 'text',
-                'name'        => '文本框',
-                'placeholder' => '我是文本框',
+                'label'       => '文本框',
+                'placeholder' => '请输入文本',
+                'desc'        => '这是一个文本框',
             ),
         ),
     ),
@@ -69,10 +70,11 @@ Widget::create( EXAMPLE_PREFIX, array(
     'description' => '这是一个小工具',
     'fields'      => array(
         array(
-            'id'          => 'text',
+            'name'        => 'text_one',
             'type'        => 'text',
-            'name'        => '文本框',
-            'placeholder' => '我是文本框',
+            'label'       => '文本框',
+            'placeholder' => '请输入文本',
+            'desc'        => '这是一个文本框',
         ),
     ),
 ) );
