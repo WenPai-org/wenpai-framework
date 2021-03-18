@@ -74,7 +74,7 @@ if ( !class_exists( 'Widget' ) ) {
         }
 
         public function update( $new_instance, $old_instance ): array {
-            return array();
+            return $new_instance;
         }
 
     }
