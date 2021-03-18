@@ -88,6 +88,7 @@ if ( !class_exists( 'Fields' ) ) {
                 'desc'        => '',
                 'default'     => '',
                 'options'     => '',
+                'std'         => '',
             );
 
             return wp_parse_args( $args, $defaults );
@@ -151,6 +152,23 @@ if ( !class_exists( 'Fields' ) ) {
             $html  .= sprintf( '<input type="checkbox" class="checkbox" id="wpuf-%1$s[%2$s]" name="%1$s[%2$s]" value="on" %3$s />', $args['section'], $args['name'], checked( $value, 'on', false ) );
             $html  .= sprintf( '%1$s</label>', $args['desc'] );
             $html  .= '</fieldset>';
+
+            echo $html;
+        }
+
+        function callback_checkbox( $args ) {
+            $value = $this->get_option( $args['name'], $args['prefix'], $args['section'], $args['std'] );
+            $html  = '<fieldset>';
+            $html .= sprintf( '<input type="hidden" name="%1$s[%2$s]" value="" />', $args['section'], $args['name'] );
+            foreach ( $args['options'] as $key => $label ) {
+                $checked = isset( $value[$key] ) ? $value[$key] : '0';
+                $html    .= sprintf( '<label for="wpuf-%1$s[%2$s][%3$s]">', $args['section'], $args['name'], $key );
+                $html    .= sprintf( '<input type="checkbox" class="checkbox" id="wpuf-%1$s[%2$s][%3$s]" name="%1$s[%2$s][%3$s]" value="%3$s" %4$s />', $args['section'], $args['name'], $key, checked( $checked, $key, false ) );
+                $html    .= sprintf( '%1$s</label><br>',  $label );
+            }
+
+            $html .= $this->_get_field_description( $args );
+            $html .= '</fieldset>';
 
             echo $html;
         }

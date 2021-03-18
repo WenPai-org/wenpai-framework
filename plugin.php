@@ -61,6 +61,22 @@ Setting::create_section( EXAMPLE_PREFIX, array(
                 'desc'  => '这是一个开关',
                 'type'  => 'switcher'
             ),
+            array(
+                'name'  => 'checkbox',
+                'label' => '多选框',
+                'desc'  => '这是一个多选框',
+                'type'  => 'checkbox',
+                'default' => array(
+                    'one' => 'one',
+                    'four' => 'four'
+                ),
+                'options' => array(
+                    'one'   => 'One',
+                    'two'   => 'Two',
+                    'three' => 'Three',
+                    'four'  => 'Four'
+                ),
+            ),
         ),
     ), array(
         'id'     => 'two',
