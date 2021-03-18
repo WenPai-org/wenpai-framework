@@ -103,6 +103,13 @@ Widget::create( EXAMPLE_PREFIX, array(
     'description' => '这是一个小工具',
     'fields'      => array(
         array(
+            'name'        => 'title',
+            'type'        => 'text',
+            'label'       => '标题',
+            'placeholder' => '请输入标题',
+            'desc'        => '标题是name为title的字段，前端输出时会自动输出在小工具的标题栏',
+        ),
+        array(
             'name'        => 'text_one',
             'type'        => 'text',
             'label'       => '文本框',
@@ -111,3 +118,17 @@ Widget::create( EXAMPLE_PREFIX, array(
         ),
     ),
 ) );
+
+/**
+ * 小工具生成器会执行一个名称格式为[应用前缀+Widget ID]的函数回调
+ */
+if ( ! function_exists( 'wenpai_framework_example_one_widget' ) ) {
+    /**
+     * one_widget小工具的函数回调
+     *
+     * @param array $instance 小工具中保存的表单数据
+     */
+    function wenpai_framework_example_one_widget( array $instance ) {
+        echo $instance['text_one'] ?? '';
+    }
+}

@@ -27,9 +27,9 @@ if ( !class_exists( 'Widget' ) ) {
 
         private $args = array();
 
-        public function __construct( string $prefix, array $args ) {
-            $this->prefix = $prefix;
+        private $widget_id = '';
 
+        public function __construct( string $prefix, array $args ) {
             $this->args = wp_parse_args( $args, array(
                 'id'          => '',
                 'title'       => '',
@@ -38,8 +38,11 @@ if ( !class_exists( 'Widget' ) ) {
                 'fields'      => array(),
             ) );
 
+            $this->prefix    = $prefix;
+            $this->widget_id = $prefix . '_' . $this->args['id'];
+
             parent::__construct(
-                $prefix . '_' . $this->args['id'],
+                $this->widget_id,
                 $this->args['title'],
                 array(
                     'description' => $this->args['description'],
@@ -53,7 +56,12 @@ if ( !class_exists( 'Widget' ) ) {
         }
 
         public function widget( $args, $instance ) {
-            echo 'hello,world';
+            echo $args['before_widget'] ?? '';
+            if ( isset($instance['title']) && ! empty($instance['title']) ) {
+                echo $args['before_title'] . $instance['title'] . $args['after_title'];
+            }
+            call_user_func( $this->widget_id, $instance );
+            echo $args['after_widget'] ?? '';
         }
 
         public function form( $instance ): string {
