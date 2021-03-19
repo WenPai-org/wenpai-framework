@@ -9,6 +9,8 @@
 
 namespace Wenpai\Framework;
 
+use phpDocumentor\Reflection\Types\Mixed_;
+
 if ( !class_exists( 'Fields' ) ) {
 
     /**
@@ -57,9 +59,9 @@ if ( !class_exists( 'Fields' ) ) {
          * @param string $section 设置组ID
          * @param string $default 默认值
          *
-         * @return mixed|string
+         * @return array|string
          */
-        public function get_option(string $option, string $prefix, string $section, $default = ''): string {
+        public function get_option(string $option, string $prefix, string $section, $default = '') {
             $options = get_option( "{$prefix}_{$section}" );
 
             if ( isset( $options[$option] ) ) {
@@ -130,8 +132,9 @@ if ( !class_exists( 'Fields' ) ) {
         function callback_select( $args ) {
             $value = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['default'] );
             $size  = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
+            $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
 
-            $html  = sprintf( '<select class="%1$s" name="%2$s[%3$s]" id="%2$s[%3$s]">', $size, $args['section'], $args['name'] );
+            $html  = sprintf( '<select class="%1$s" name="%2$s" id="%2$s">', $size, $name );
 
             foreach ( $args['options'] as $key => $label ) {
                 $html .= sprintf( '<option value="%s"%s>%s</option>', $key, selected( $value, $key, false ), $label );
@@ -145,11 +148,12 @@ if ( !class_exists( 'Fields' ) ) {
 
         function callback_switcher( $args ) {
             $value = self::get_option($args['name'], $args['prefix'], $args['section']);
+            $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
 
             $html  = '<fieldset>';
-            $html  .= sprintf( '<label for="wpuf-%1$s[%2$s]">', $args['section'], $args['name'] );
-            $html  .= sprintf( '<input type="hidden" name="%1$s[%2$s]" value="off" />', $args['section'], $args['name'] );
-            $html  .= sprintf( '<input type="checkbox" class="checkbox" id="wpuf-%1$s[%2$s]" name="%1$s[%2$s]" value="on" %3$s />', $args['section'], $args['name'], checked( $value, 'on', false ) );
+            $html  .= sprintf( '<label for="wpf-%1$s">', $name );
+            $html  .= sprintf( '<input type="hidden" name="%1$s" value="off" />', $name );
+            $html  .= sprintf( '<input type="checkbox" class="checkbox" id="wpf-%1$s" name="%1$s" value="on" %2$s />', $name, checked( $value, 'on', false ) );
             $html  .= sprintf( '%1$s</label>', $args['desc'] );
             $html  .= '</fieldset>';
 
@@ -158,12 +162,14 @@ if ( !class_exists( 'Fields' ) ) {
 
         function callback_checkbox( $args ) {
             $value = $this->get_option( $args['name'], $args['prefix'], $args['section'], $args['std'] );
+            $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
+
             $html  = '<fieldset>';
-            $html .= sprintf( '<input type="hidden" name="%1$s[%2$s]" value="" />', $args['section'], $args['name'] );
+            $html .= sprintf( '<input type="hidden" name="%1$s" value="" />', $name );
             foreach ( $args['options'] as $key => $label ) {
                 $checked = isset( $value[$key] ) ? $value[$key] : '0';
-                $html    .= sprintf( '<label for="wpuf-%1$s[%2$s][%3$s]">', $args['section'], $args['name'], $key );
-                $html    .= sprintf( '<input type="checkbox" class="checkbox" id="wpuf-%1$s[%2$s][%3$s]" name="%1$s[%2$s][%3$s]" value="%3$s" %4$s />', $args['section'], $args['name'], $key, checked( $checked, $key, false ) );
+                $html    .= sprintf( '<label for="wpf-%1$s[%2$s]">', $name, $key );
+                $html    .= sprintf( '<input type="checkbox" class="checkbox" id="wpf-%1$s[%2$s]" name="%1$s[%2$s]" value="%2$s" %3$s />', $name, $key, checked( $checked, $key, false ) );
                 $html    .= sprintf( '%1$s</label><br>',  $label );
             }
 
