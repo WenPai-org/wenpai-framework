@@ -10,11 +10,11 @@
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  */
 
-use Wenpai\Framework\Setting;
-use Wenpai\Framework\Widget;
+use Wenpai\Framework\{ Setting, Widget, Meta_Box };
 
 require_once 'framework/class-setting.php';
 require_once 'framework/class-widget.php';
+require_once 'framework/class-meta-box.php';
 
 /**
  * 声明设置项前缀标识
@@ -109,6 +109,22 @@ Widget::create( EXAMPLE_PREFIX, array(
             'placeholder' => '请输入标题',
             'desc'        => '标题是name为title的字段，前端输出时会自动输出在小工具的标题栏',
         ),
+        array(
+            'name'        => 'text_one',
+            'type'        => 'text',
+            'label'       => '文本框',
+            'placeholder' => '请输入文本',
+            'desc'        => '这是一个文本框',
+        ),
+    ),
+) );
+
+Meta_Box::create( EXAMPLE_PREFIX, array(
+    'id'          => 'one_meta_box',
+    'title'       => '元框一',
+    'context'     => 'side',
+    'screens'     => array( 'post', 'page' ),
+    'fields'      => array(
         array(
             'name'        => 'text_one',
             'type'        => 'text',

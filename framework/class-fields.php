@@ -26,6 +26,8 @@ if ( !class_exists( 'Fields' ) ) {
 
         const Widget = 'widget';
 
+        const Meta_Box = 'meta_box';
+
         private $type = '';
 
         public function __construct( $type = self::Setting ) {
@@ -115,7 +117,7 @@ if ( !class_exists( 'Fields' ) ) {
                 $size  = isset($args['size']) && ! empty($args['size']) ? $args['size'] : 'regular';
                 $size .= '-text';
                 $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
-            } elseif ( self::Widget === $this->type ) {
+            } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
                 $value = $args['value'];
                 $size  = isset($args['size']) && ! empty($args['size']) ? $args['size'] : 'widefat';
                 $name  = $args['name'];
