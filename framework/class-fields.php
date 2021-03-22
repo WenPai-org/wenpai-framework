@@ -45,7 +45,11 @@ if ( !class_exists( 'Fields' ) ) {
          */
         private function _get_field_description( array $args ): string {
             if ( ! empty( $args['desc'] ) ) {
-                $desc = sprintf( '<p class="description">%s</p>', $args['desc'] );
+                if ( self::Setting === $this->type ) {
+                    $desc = sprintf( '<p class="description">%s</p>', $args['desc'] );
+                } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
+                    $desc = sprintf( '<small class="description">%s</small>', $args['desc'] );
+                }
             } else {
                 $desc = '';
             }
