@@ -119,6 +119,22 @@ Widget::create( EXAMPLE_PREFIX, array(
     ),
 ) );
 
+/**
+ * 小工具生成器会执行一个名称格式为[应用前缀+Widget ID]的函数回调
+ */
+if ( ! function_exists( 'wenpai_framework_example_one_widget' ) ) {
+
+    /**
+     * one_widget小工具的函数回调
+     *
+     * @param array $instance 小工具中保存的表单数据
+     */
+    function wenpai_framework_example_one_widget( array $instance ) {
+        echo $instance['text_one'] ?? '';
+    }
+
+}
+
 Meta_Box::create( EXAMPLE_PREFIX, array(
     'id'          => 'one_meta_box',
     'title'       => '元框一',
@@ -134,17 +150,3 @@ Meta_Box::create( EXAMPLE_PREFIX, array(
         ),
     ),
 ) );
-
-/**
- * 小工具生成器会执行一个名称格式为[应用前缀+Widget ID]的函数回调
- */
-if ( ! function_exists( 'wenpai_framework_example_one_widget' ) ) {
-    /**
-     * one_widget小工具的函数回调
-     *
-     * @param array $instance 小工具中保存的表单数据
-     */
-    function wenpai_framework_example_one_widget( array $instance ) {
-        echo $instance['text_one'] ?? '';
-    }
-}
