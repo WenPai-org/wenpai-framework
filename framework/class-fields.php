@@ -9,8 +9,6 @@
 
 namespace Wenpai\Framework;
 
-use phpDocumentor\Reflection\Types\Mixed_;
-
 if ( !class_exists( 'Fields' ) ) {
 
     /**
