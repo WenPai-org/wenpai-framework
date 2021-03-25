@@ -7,7 +7,7 @@
  * @package Wenpai\Framework
  */
 
-namespace Wenpai\Framework;
+namespace WenPai\Framework;
 
 use WP_Widget;
 use WP_Widget_Factory;

@@ -10,7 +10,7 @@
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  */
 
-use Wenpai\Framework\{ Setting, Widget, Meta_Box };
+use WenPai\Framework\{ Setting, Widget, Meta_Box };
 
 require_once 'framework/class-setting.php';
 require_once 'framework/class-widget.php';

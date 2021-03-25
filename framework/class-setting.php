@@ -7,7 +7,7 @@
  * @package Wenpai\Framework
  */
 
-namespace Wenpai\Framework;
+namespace WenPai\Framework;
 
 if ( !class_exists( 'Setting' ) ) {
 
