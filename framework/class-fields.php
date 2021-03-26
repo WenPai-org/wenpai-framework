@@ -95,6 +95,7 @@ if ( ! class_exists( 'Fields' ) ) {
 				'default'     => '',
 				'options'     => '',
 				'std'         => '',
+				'html'        => '',
 			);
 
 			return wp_parse_args( $args, $defaults );
@@ -282,6 +283,23 @@ if ( ! class_exists( 'Fields' ) ) {
 			$html .= self::_get_field_description( $args );
 
 			echo $html;
+		}
+
+		/**
+		 * 原生HTML组件
+		 *
+		 * @param array $args {
+		 *
+		 * @type string $name 字段名
+		 * @type string $section 区块ID
+		 * @type string $html HTML代码
+		 * }
+		 * @since 1.0.0
+		 *
+		 */
+		function callback_html( $args ) {
+
+			echo $args['html'];
 		}
 
 	}
