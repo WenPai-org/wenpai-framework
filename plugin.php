@@ -26,7 +26,8 @@ define('EXAMPLE_PREFIX', 'wenpai_framework_example');
  */
 Setting::create_options( EXAMPLE_PREFIX, array(
     'menu_title' => '文派开发框架',
-    'menu_slug' => 'wenpai_framework'
+    'menu_slug'  => 'wenpai_framework',
+    'network'    => true, /** 多站点模式下是否仅在网络管理中展示设置页 */
 ) );
 
 /**
@@ -76,6 +77,17 @@ Setting::create_section( EXAMPLE_PREFIX, array(
                     'three' => 'Three',
                     'four'  => 'Four'
                 ),
+            ),
+            array(
+                'name'    => 'radio',
+                'label'   => '单选框',
+                'desc'    => '这是一个单选框',
+                'type'    => 'radio',
+                'default' => 'yes',
+                'options' => array(
+                    'yes' => 'Yes',
+                    'no'  => 'No'
+                )
             ),
         ),
     ), array(
