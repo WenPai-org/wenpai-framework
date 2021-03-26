@@ -183,5 +183,22 @@ if ( !class_exists( 'Fields' ) ) {
             echo $html;
         }
 
+        function callback_radio( $args ) {
+            $value = $this->get_option( $args['name'], $args['prefix'], $args['section'], $args['default'] );
+            $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
+            $html  = '<fieldset>';
+
+            foreach ( $args['options'] as $key => $label ) {
+                $html .= sprintf( '<label for="wpf-%1$s[%2$s]">',  $name, $key );
+                $html .= sprintf( '<input type="radio" class="radio" id="wpf-%1$s[%2$s]" name="%1$s" value="%2$s" %3$s />', $name, $key, checked( $value, $key, false ) );
+                $html .= sprintf( '%1$s</label><br>', $label );
+            }
+
+            $html .= $this->_get_field_description( $args );
+            $html .= '</fieldset>';
+
+            echo $html;
+        }
+
     }
 }
