@@ -47,48 +47,55 @@ Setting::create_section( EXAMPLE_PREFIX, array(
             ),
             array(
                 'name'    => 'select',
+                'type'    => 'select',
                 'label'   => '下拉框',
                 'desc'    => '这是一个下拉框',
-                'type'    => 'select',
                 'default' => 'no',
                 'options' => array(
                     'yes' => 'Yes',
-                    'no'  => 'No'
+                    'no'  => 'No',
                 )
             ),
             array(
                 'name'  => 'switcher_one',
+                'type'  => 'switcher',
                 'label' => '开关',
                 'desc'  => '这是一个开关',
-                'type'  => 'switcher'
             ),
             array(
                 'name'  => 'checkbox',
+                'type'  => 'checkbox',
                 'label' => '多选框',
                 'desc'  => '这是一个多选框',
-                'type'  => 'checkbox',
                 'default' => array(
                     'one' => 'one',
-                    'four' => 'four'
+                    'four' => 'four',
                 ),
                 'options' => array(
                     'one'   => 'One',
                     'two'   => 'Two',
                     'three' => 'Three',
-                    'four'  => 'Four'
+                    'four'  => 'Four',
                 ),
             ),
             array(
                 'name'    => 'radio',
+                'type'    => 'radio',
                 'label'   => '单选框',
                 'desc'    => '这是一个单选框',
-                'type'    => 'radio',
                 'default' => 'yes',
                 'options' => array(
                     'yes' => 'Yes',
-                    'no'  => 'No'
+                    'no'  => 'No',
                 )
             ),
+	        array(
+		        'name'    => 'textarea',
+		        'type'    => 'textarea',
+		        'label'       => '多行文本框',
+		        'placeholder' => '请输入文本',
+		        'desc'        => '这是一个多行文本框',
+	        ),
         ),
     ), array(
         'id'     => 'two',

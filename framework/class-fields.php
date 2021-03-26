@@ -258,5 +258,31 @@ if ( ! class_exists( 'Fields' ) ) {
 			echo $html;
 		}
 
+		/**
+		 * 多行文本框组件
+		 *
+		 * @param array $args {
+		 *
+		 * @type string $name 字段名
+		 * @type string $section 区块ID
+		 * @type string $size 大小
+		 * @type string $placeholder placeholder属性值
+		 * @type string $desc 描述
+		 * }
+		 * @since 1.0.0
+		 *
+		 */
+		function callback_textarea( $args ) {
+			$value       = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['std'] );
+			$name        = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
+			$size        = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
+			$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
+
+			$html = sprintf( '<textarea rows="5" cols="55" class="%1$s-text" id="%2$s" name="%2$s"%3$s>%4$s</textarea>', $size, $name, $placeholder, $value );
+			$html .= self::_get_field_description( $args );
+
+			echo $html;
+		}
+
 	}
 }
