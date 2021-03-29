@@ -263,6 +263,10 @@ if ( !class_exists( 'Fields' ) ) {
       .card > footer {
           text-align: right;
       }
+
+      a {
+          text-decoration: none;
+      }
 		</style>
 		<script>
 			var $ = jQuery.noConflict();
