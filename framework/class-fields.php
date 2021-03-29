@@ -229,43 +229,39 @@ if ( !class_exists( 'Fields' ) ) {
         ?>
 		<footer class="card-footer"><a href="javascript:;" class="add-card"><?php esc_html_e('Add') ?></a></footer>
 		<style>
-			section.card {
-				padding: 1.5em;
-				margin: 0 0 10px;
-			}
-
-			section.card li {
-				display: flex;
-				list-style: none;
-			}
-
-			section.card>li>label {
-				min-width: 100px
-			}
-
-			.loading-position aside label {
-				display: block;
-				margin: 10px 0 0;
-			}
-
-			.loading-position aside label:first-child {
-				margin: 0;
-			}
-
-			.card+.card-footer {
-				margin-top: 10px
-			}
-
-      .card {
-          background: #f3f2f2;
+			a{
+      text-decoration: none;
+      }
+      section.card {
+      padding: 1.5em;
+      margin: 0 0 10px;
+      background: #f3f2f2;
       }
 
-      .card > footer {
-          text-align: right;
+      section.card li {
+      display: flex;
+      list-style: none;
       }
 
-      a {
-          text-decoration: none;
+      section.card > li > label {
+      min-width: 100px
+      }
+
+      .loading-position aside label {
+      display: block;
+      margin: 10px 0 0;
+      }
+
+      .loading-position aside label:first-child {
+      margin: 0;
+      }
+
+      section.card + .card-footer {
+      margin-top: 10px
+      }
+
+      section.card > footer {
+      text-align: right;
       }
 		</style>
 		<script>
