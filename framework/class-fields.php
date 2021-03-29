@@ -115,7 +115,7 @@ if ( !class_exists( 'Fields' ) ) {
         public function callback_text( array $args ) {
             $value = $size = $name = '';
             if ( self::Setting === $this->type ) {
-                $value = self::get_option($args['name'], $args['prefix'], $args['section']);
+                $value = self::get_option($args['name'], $args['prefix'], $args['section'], $args['default']);
                 $size  = isset($args['size']) && ! empty($args['size']) ? $args['size'] : 'regular';
                 $size .= '-text';
                 $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
