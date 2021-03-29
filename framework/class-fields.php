@@ -95,6 +95,7 @@ if ( !class_exists( 'Fields' ) ) {
                 'default'     => '',
                 'options'     => '',
                 'std'         => '',
+                'fields'      => [],
             );
 
             return wp_parse_args( $args, $defaults );
@@ -198,6 +199,106 @@ if ( !class_exists( 'Fields' ) ) {
             $html .= '</fieldset>';
 
             echo $html;
+        }
+
+        function callback_card( $args ) {
+            $value = $this->get_option( $args['name'], $args['prefix'], $args['section'], $args['default'] );
+            if ( ! empty( $value ) ) {
+                foreach ( $value as $card_id => $card ) {
+                    echo '<section class="card">';
+                    foreach ( $args['fields'] as $key => $field ) {
+                        echo '<li>';
+                        echo '<label>' . $field['label'] . '</label>';
+                        echo '<aside>';
+                        $field['prefix']  = $args['prefix'];
+                        $field['section'] = sprintf('%s[%s][%s]', $args['section'], $args['name'], $card_id) ?? '';
+                        $field['default'] = @$card[$field['name']];
+
+                        $field = $this->parse_field_array( $field );
+
+                        call_user_func( array( $this, 'callback_' . $field['type'] ), $field );
+                        echo '</aside>';
+                        echo '</li>';
+                    }
+                    echo '<footer>';
+                    echo '<a class="remove-card" href="javascript:">' . esc_html__('Remove') . '</a>';
+                    echo '</footer>';
+                    echo '</section>';
+                }
+            }
+        ?>
+		<footer class="card-footer"><a href="javascript:;" class="add-card"><?php esc_html_e('Add') ?></a></footer>
+		<style>
+			section.card {
+				padding: 1.5em;
+				margin: 0 0 10px;
+			}
+
+			section.card li {
+				display: flex;
+				list-style: none;
+			}
+
+			section.card>li>label {
+				min-width: 100px
+			}
+
+			.loading-position aside label {
+				display: block;
+				margin: 10px 0 0;
+			}
+
+			.loading-position aside label:first-child {
+				margin: 0;
+			}
+
+			.card+.card-footer {
+				margin-top: 10px
+			}
+
+      .card {
+          background: #f3f2f2;
+      }
+
+      .card > footer {
+          text-align: right;
+      }
+		</style>
+		<script>
+			var $ = jQuery.noConflict();
+			           var i=1;
+			$('.add-card').on('click', function() {
+				var html = '';
+				html += `
+				<section class="card">
+        <?php
+                    foreach ( $args['fields'] as $field ) {
+                        echo '<li>';
+                        echo '<label>' . $field['label'] . '</label>';
+                        echo '<aside>';
+                        $field['prefix']  = $args['prefix'];
+                        $field['section'] = sprintf('%s[%s][%s]', $args['section'], $args['name'], $card_id) ?? '';
+                        $field = $this->parse_field_array( $field );
+                        call_user_func( array( $this, 'callback_' . $field['type'] ), $field );
+                        echo '</aside>';
+                        echo '</li>';
+                    }
+        ?>
+                  <footer>
+                    <a class="remove-card" href="javascript:">删除</a>
+                  </footer>
+                </section>
+				`;
+				$('.card-footer').before(html);
+				i++;
+				    bindListener();
+			});
+			function bindListener(){
+			$(".remove-card").on("click", function() {
+				$(this).parent().parent().remove();
+			})}
+		</script>
+<?php
         }
 
     }
