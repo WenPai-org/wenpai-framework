@@ -89,6 +89,42 @@ Setting::create_section( EXAMPLE_PREFIX, array(
                     'no'  => 'No'
                 )
             ),
+            array(
+                'name'    => 'card',
+                'label'   => '卡片',
+                'desc'    => '这是一个卡片',
+                'type'    => 'card',
+                'default' => array(
+                    array(
+                        'text'   => '文本框的默认值1',
+                        'select' =>'yes',
+                    ),
+                    array(
+                        'text'   => '文本框的默认值2',
+                        'select' =>'yes',
+                    ),
+                ),
+                'fields'  => array(
+                    array(
+                        'name'        => 'text',
+                        'type'        => 'text',
+                        'label'       => '文本框',
+                        'placeholder' => '请输入文本',
+                        'desc'        => '这是一个文本框',
+                    ),
+                    array(
+                        'name'    => 'select',
+                        'label'   => '下拉框',
+                        'desc'    => '这是一个下拉框',
+                        'type'    => 'select',
+                        'default' => 'no',
+                        'options' => array(
+                            'yes' => 'Yes',
+                            'no'  => 'No'
+                        )
+                    ),
+                ),
+            ),
         ),
     ), array(
         'id'     => 'two',
