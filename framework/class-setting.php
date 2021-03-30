@@ -9,7 +9,7 @@
 
 namespace WenPai\Framework;
 
-if ( !class_exists( 'Setting' ) ) {
+if ( ! class_exists( Setting::class ) ) {
 
     require_once 'class-fields.php';
 

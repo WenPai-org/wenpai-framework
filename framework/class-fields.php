@@ -9,7 +9,7 @@
 
 namespace WenPai\Framework;
 
-if ( ! class_exists( 'Fields' ) ) {
+if ( ! class_exists( Fields::class ) ) {
 
     /**
      * 组件库

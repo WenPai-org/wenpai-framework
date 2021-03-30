@@ -13,7 +13,7 @@ use WP_Post;
 
 require_once 'class-fields.php';
 
-if ( !class_exists( 'Meta_Box' ) ) {
+if ( ! class_exists( Meta_Box::class ) ) {
 
     /**
      * 元框生成器

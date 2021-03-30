@@ -14,7 +14,7 @@ use WP_Widget_Factory;
 
 require_once 'class-fields.php';
 
-if ( !class_exists( 'Widget' ) ) {
+if ( ! class_exists( Widget::class ) ) {
 
     /**
      * 小工具生成器
