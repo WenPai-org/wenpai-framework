@@ -516,7 +516,7 @@ if ( ! class_exists( Fields::class ) ) {
           </style>
           <script>
             var $ = jQuery.noConflict();
-            var i = 0;
+            var i = $("section.card").length;
             $('.add-card').on('click', function () {
               var html = '';
               html += `
