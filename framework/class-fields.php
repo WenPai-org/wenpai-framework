@@ -493,7 +493,8 @@ if ( ! class_exists( Fields::class ) ) {
               }
 
               section.card > li > label {
-                  min-width: 100px
+                  min-width: 100px;
+                  line-height: 2.1;
               }
 
               .loading-position aside label {
