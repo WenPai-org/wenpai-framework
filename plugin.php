@@ -46,49 +46,90 @@ Setting::create_section( EXAMPLE_PREFIX, array(
                 'desc'        => '这是一个文本框',
             ),
             array(
+                'name'        => 'password',
+                'type'        => 'password',
+                'label'       => '密码框',
+                'desc'        => '这是一个密码框',
+            ),
+            array(
                 'name'    => 'select',
+                'type'    => 'select',
                 'label'   => '下拉框',
                 'desc'    => '这是一个下拉框',
-                'type'    => 'select',
                 'default' => 'no',
                 'options' => array(
                     'yes' => 'Yes',
-                    'no'  => 'No'
-                )
+                    'no'  => 'No',
+                ),
             ),
             array(
                 'name'  => 'switcher_one',
+                'type'  => 'switcher',
                 'label' => '开关',
                 'desc'  => '这是一个开关',
-                'type'  => 'switcher'
             ),
             array(
-                'name'  => 'checkbox',
-                'label' => '多选框',
-                'desc'  => '这是一个多选框',
-                'type'  => 'checkbox',
+                'name'    => 'checkbox',
+                'type'    => 'checkbox',
+                'label'   => '多选框',
+                'desc'    => '这是一个多选框',
                 'default' => array(
-                    'one' => 'one',
-                    'four' => 'four'
+                    'one'  => 'one',
+                    'four' => 'four',
                 ),
                 'options' => array(
                     'one'   => 'One',
                     'two'   => 'Two',
                     'three' => 'Three',
-                    'four'  => 'Four'
+                    'four'  => 'Four',
                 ),
             ),
             array(
                 'name'    => 'radio',
+                'type'    => 'radio',
                 'label'   => '单选框',
                 'desc'    => '这是一个单选框',
-                'type'    => 'radio',
                 'default' => 'yes',
                 'options' => array(
                     'yes' => 'Yes',
-                    'no'  => 'No'
-                )
+                    'no'  => 'No',
+                ),
             ),
+            array(
+                'name'        => 'textarea',
+                'type'        => 'textarea',
+                'label'       => '多行文本框',
+                'placeholder' => '请输入文本',
+                'desc'        => '这是一个多行文本框',
+            ),
+            array(
+                'name'  => 'html',
+                'type'  => 'html',
+                'label' => '原生HTML',
+                'html'  => '<p>这里可以写原生HTML</p>',
+            ),
+            array(
+                'name'   => 'color',
+                'type'   => 'color',
+                'label'  => '颜色拾取',
+                'default'=>'#66ccff',
+                'desc'   => '这是颜色拾取器',
+            ),
+            array(
+                'name'   => 'file',
+                'type'   => 'file',
+                'label'  => '文件上传',
+                'desc'   => '这里可以上传文件哦',
+                'options' => array(
+                    'button_label' => '选择文件',
+                ),
+			),
+			array(
+    			'name'   => 'tinymce',
+    			'type'   => 'tinymce',
+    			'label'  => 'TinyMCE编辑器',
+    			'desc'   => '这是TinyMCE富文本编辑器',
+		    ),
             array(
                 'name'    => 'card',
                 'label'   => '卡片',
@@ -151,19 +192,98 @@ Widget::create( EXAMPLE_PREFIX, array(
     'description' => '这是一个小工具',
     'fields'      => array(
         array(
-            'name'        => 'title',
-            'type'        => 'text',
-            'label'       => '标题',
-            'placeholder' => '请输入标题',
-            'desc'        => '标题是name为title的字段，前端输出时会自动输出在小工具的标题栏',
-        ),
-        array(
-            'name'        => 'text_one',
-            'type'        => 'text',
-            'label'       => '文本框',
-            'placeholder' => '请输入文本',
-            'desc'        => '这是一个文本框',
-        ),
+			'name'        => 'title',
+			'type'        => 'text',
+			'label'       => '标题',
+			'placeholder' => '请输入标题',
+			'desc'        => '标题是name为title的字段，前端输出时会自动输出在小工具的标题栏',
+		),
+		array(
+			'name'        => 'text_one',
+			'type'        => 'text',
+			'label'       => '文本框',
+			'placeholder' => '请输入文本',
+			'desc'        => '这是一个文本框',
+		),
+		array(
+			'name'        => 'password',
+			'type'        => 'password',
+			'label'       => '密码框',
+			'desc'        => '这是一个密码框',
+		),
+		array(
+			'name'    => 'select',
+			'type'    => 'select',
+			'label'   => '下拉框',
+			'desc'    => '这是一个下拉框',
+			'default' => 'no',
+			'options' => array(
+				'yes' => 'Yes',
+				'no'  => 'No',
+			)
+		),
+		array(
+			'name'  => 'switcher_one',
+			'type'  => 'switcher',
+			'label' => '开关',
+			'desc'  => '这是一个开关',
+		),
+		array(
+			'name'    => 'checkbox',
+			'type'    => 'checkbox',
+			'label'   => '多选框',
+			'desc'    => '这是一个多选框',
+			'default' => array(
+				'one'  => 'one',
+				'four' => 'four',
+			),
+			'options' => array(
+				'one'   => 'One',
+				'two'   => 'Two',
+				'three' => 'Three',
+				'four'  => 'Four',
+			),
+		),
+		array(
+			'name'    => 'radio',
+			'type'    => 'radio',
+			'label'   => '单选框',
+			'desc'    => '这是一个单选框',
+			'default' => 'yes',
+			'options' => array(
+				'yes' => 'Yes',
+				'no'  => 'No',
+			),
+		),
+		array(
+			'name'        => 'textarea',
+			'type'        => 'textarea',
+			'label'       => '多行文本框',
+			'placeholder' => '请输入文本',
+			'desc'        => '这是一个多行文本框',
+		),
+		array(
+			'name'  => 'html',
+			'type'  => 'html',
+			'label' => '原生HTML',
+			'html'  => '<p>这里可以写原生HTML</p>',
+		),
+		array(
+			'name'   => 'color',
+			'type'   => 'color',
+			'label'  => '颜色拾取',
+			'default'=>'#66ccff',
+			'desc'   => '这是颜色拾取器',
+		),
+		array(
+			'name'   => 'file',
+			'type'   => 'file',
+			'label'  => '文件上传',
+			'desc'   => '这里可以上传文件哦',
+			'options' => array(
+                'button_label' => '选择文件',
+            ),
+		),
     ),
 ) );
 
@@ -190,11 +310,90 @@ Meta_Box::create( EXAMPLE_PREFIX, array(
     'screens'     => array( 'post', 'page' ),
     'fields'      => array(
         array(
-            'name'        => 'text_one',
-            'type'        => 'text',
-            'label'       => '文本框',
-            'placeholder' => '请输入文本',
-            'desc'        => '这是一个文本框',
-        ),
+			'name'        => 'text_one',
+			'type'        => 'text',
+			'label'       => '文本框',
+			'placeholder' => '请输入文本',
+			'desc'        => '这是一个文本框',
+		),
+		array(
+			'name'        => 'password',
+			'type'        => 'password',
+			'label'       => '密码框',
+			'desc'        => '这是一个密码框',
+		),
+		array(
+			'name'    => 'select',
+			'type'    => 'select',
+			'label'   => '下拉框',
+			'desc'    => '这是一个下拉框',
+			'default' => 'no',
+			'options' => array(
+				'yes' => 'Yes',
+				'no'  => 'No',
+			)
+		),
+		array(
+			'name'  => 'switcher_one',
+			'type'  => 'switcher',
+			'label' => '开关',
+			'desc'  => '这是一个开关',
+		),
+		array(
+			'name'    => 'checkbox',
+			'type'    => 'checkbox',
+			'label'   => '多选框',
+			'desc'    => '这是一个多选框',
+			'default' => array(
+				'one'  => 'one',
+				'four' => 'four',
+			),
+			'options' => array(
+				'one'   => 'One',
+				'two'   => 'Two',
+				'three' => 'Three',
+				'four'  => 'Four',
+			),
+		),
+		array(
+			'name'    => 'radio',
+			'type'    => 'radio',
+			'label'   => '单选框',
+			'desc'    => '这是一个单选框',
+			'default' => 'yes',
+			'options' => array(
+				'yes' => 'Yes',
+				'no'  => 'No',
+			),
+		),
+		array(
+			'name'        => 'textarea',
+			'type'        => 'textarea',
+			'label'       => '多行文本框',
+			'placeholder' => '请输入文本',
+			'desc'        => '这是一个多行文本框',
+		),
+		array(
+			'name'  => 'html',
+			'type'  => 'html',
+			'label' => '原生HTML',
+			'html'  => '<p>这里可以写原生HTML</p>',
+		),
+		array(
+			'name'   => 'color',
+			'type'   => 'color',
+			'label'  => '颜色拾取',
+			'default'=>'#66ccff',
+			'desc'   => '这是颜色拾取器',
+		),
+		array(
+			'name'   => 'file',
+			'type'   => 'file',
+			'label'  => '文件上传',
+			'desc'   => '这里可以上传文件哦',
+			'options' => array(
+                'button_label' => '选择文件',
+            ),
+		),
     ),
 ) );

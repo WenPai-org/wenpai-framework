@@ -46,7 +46,7 @@ if ( !class_exists( 'Fields' ) ) {
                 if ( self::Setting === $this->type ) {
                     $desc = sprintf( '<p class="description">%s</p>', $args['desc'] );
                 } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
-                    $desc = sprintf( '<small class="description">%s</small>', $args['desc'] );
+                    $desc = sprintf( '<br /><small class="description">%s</small>', $args['desc'] );
                 }
             } else {
                 $desc = '';
@@ -95,6 +95,7 @@ if ( !class_exists( 'Fields' ) ) {
                 'default'     => '',
                 'options'     => '',
                 'std'         => '',
+                'html'        => '',
                 'fields'      => [],
             );
 
@@ -102,7 +103,7 @@ if ( !class_exists( 'Fields' ) ) {
         }
 
         /**
-         * Text组件
+         * 文本框组件
          *
          * @since 1.0.0
          *
@@ -110,96 +111,359 @@ if ( !class_exists( 'Fields' ) ) {
          *     @type string $name        字段名
          *     @type string $section     区块ID
          *     @type string $size        大小
+         *     @type string $desc        描述
          *     @type string $placeholder HTML placeholder属性值
          * }
          */
         public function callback_text( array $args ) {
+			$value = $size = $name = '';
+			if ( self::Setting === $this->type ) {
+				$value = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['default'] );
+				$size  = isset( $args['size'] ) && ! empty( $args['size'] ) ? $args['size'] : 'regular';
+				$size  .= '-text';
+				$name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
+			} elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
+				$value = $args['value'];
+				$size  = isset( $args['size'] ) && ! empty( $args['size'] ) ? $args['size'] : 'widefat';
+				$name  = $args['name'];
+			}
+			$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
+
+			$html = sprintf( '<input type="text" class="%1$s" id="%2$s" name="%2$s" value="%3$s"%4$s/>',
+				$size, $name, $value, $placeholder );
+			$html .= self::_get_field_description( $args );
+
+			echo $html;
+		}
+
+        /**
+         * 密码框组件
+         *
+         * @since 1.0.0
+         *
+         * @param array $args {
+         *     @type string $name        字段名
+         *     @type string $section     区块ID
+         *     @type string $size        大小
+         *     @type string $desc        描述
+         * }
+         */
+        public function callback_password( array $args ) {
+			$value = $size = $name = '';
+			if ( self::Setting === $this->type ) {
+				$value = self::get_option( $args['name'], $args['prefix'], $args['section'] );
+				$size  = isset( $args['size'] ) && ! empty( $args['size'] ) ? $args['size'] : 'regular';
+				$size  .= '-text';
+				$name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
+			} elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
+				$value = $args['value'];
+				$size  = isset( $args['size'] ) && ! empty( $args['size'] ) ? $args['size'] : 'widefat';
+				$name  = $args['name'];
+			}
+			
+			$html = sprintf( '<input type="password" class="%1$s" id="%2$s" name="%2$s" value="%3$s"/>',
+				$size, $name, $value );
+			$html .= self::_get_field_description( $args );
+
+			echo $html;
+		}
+
+        /**
+         * 下拉框组件
+         *
+         * @since 1.0.0
+         *
+         * @param array $args {
+         *     @type string $name        字段名
+         *     @type string $section     区块ID
+         *     @type string $size        大小
+         *     @type string $options     选项
+         *     @type string $default     默认值
+         *     @type string $desc        描述
+         * }
+         */
+        public function callback_select( $args ) {
+			$value = $size = $name = '';
+			if ( self::Setting === $this->type ) {
+				$value = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['default'] );
+				$size  = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
+				$name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
+			} elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
+				$value = $args['value'];
+				$size  = isset( $args['size'] ) && ! empty( $args['size'] ) ? $args['size'] : 'widefat';
+				$name  = $args['name'];
+			}
+
+			$html = sprintf( '<select style="box-sizing: border-box;" class="%1$s" name="%2$s" id="%2$s">', $size, $name );
+
+			foreach ( $args['options'] as $key => $label ) {
+				$html .= sprintf( '<option value="%s"%s>%s</option>', $key, selected( $value, $key, false ), $label );
+			}
+
+			$html .= sprintf( '</select>' );
+			$html .= self::_get_field_description( $args );
+
+			echo $html;
+		}
+
+        /**
+         * 开关组件
+         *
+         * @since 1.0.0
+         *
+         * @param array $args {
+         *     @type string $name        字段名
+         *     @type string $section     区块ID
+         *     @type string $default     默认值
+         *     @type string $desc        描述
+         * }
+         */
+        public function callback_switcher( $args ) {
+			$value = $size = $name = '';
+			if ( self::Setting === $this->type ) {
+				$value = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['default'] );
+				$name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
+			} elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
+				$value = $args['value'];
+				$name  = $args['name'];
+			}
+
+			$html = '<fieldset>';
+			$html .= sprintf( '<label for="wpf-%1$s">', $name );
+			$html .= sprintf( '<input type="hidden" name="%1$s" value="off" />', $name );
+			$html .= sprintf( '<input type="checkbox" class="checkbox" id="wpf-%1$s" name="%1$s" value="on" %2$s />', $name, checked( $value, 'on', false ) );
+			$html .= sprintf( '%1$s</label>', $args['desc'] );
+			$html .= '</fieldset>';
+
+			echo $html;
+		}
+
+        /**
+         * 多选框组件
+         *
+         * @since 1.0.0
+         *
+         * @param array $args {
+         *     @type string $name        字段名
+         *     @type string $section     区块ID
+         *     @type string $std         未知东西
+         *     @type string $options     选项
+         *     @type string $default     默认值
+         * }
+         */
+        public function callback_checkbox( $args ) {
+		    $value = $size = $name = '';
+		    if ( self::Setting === $this->type ) {
+    			$value = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['std'] );
+    			$name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
+		    } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
+		        $value = $args['value'];
+				$name  = $args['name'];
+		    }
+
+			$html = '<fieldset>';
+			$html .= sprintf( '<input type="hidden" name="%1$s" value="" />', $name );
+			foreach ( $args['options'] as $key => $label ) {
+				$checked = isset( $value[ $key ] ) ? $value[ $key ] : '0';
+				$html    .= sprintf( '<label for="wpf-%1$s[%2$s]">', $name, $key );
+				$html    .= sprintf( '<input type="checkbox" class="checkbox" id="wpf-%1$s[%2$s]" name="%1$s[%2$s]" value="%2$s" %3$s />', $name, $key, checked( $checked, $key, false ) );
+				$html    .= sprintf( '%1$s</label><br>', $label );
+			}
+
+			$html .= self::_get_field_description( $args );
+			$html .= '</fieldset>';
+
+			echo $html;
+		}
+
+        /**
+         * 单选框组件
+         *
+         * @since 1.0.0
+         *
+         * @param array $args {
+         *     @type string $name        字段名
+         *     @type string $section     区块ID
+         *     @type string $size        大小
+         *     @type string $options     选项
+         *     @type string $default     默认值
+         * }
+         */
+        public function callback_radio( $args ) {
+		    $value = $size = $name = '';
+		    if ( self::Setting === $this->type ) {
+    			$value = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['default'] );
+    			$name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
+		    } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
+		        $value = $args['value'];
+				$name  = $args['name'];
+		    }
+			$html  = '<fieldset>';
+
+			foreach ( $args['options'] as $key => $label ) {
+				$html .= sprintf( '<label for="wpf-%1$s[%2$s]">', $name, $key );
+				$html .= sprintf( '<input type="radio" class="radio" id="wpf-%1$s[%2$s]" name="%1$s" value="%2$s" %3$s />', $name, $key, checked( $value, $key, false ) );
+				$html .= sprintf( '%1$s</label><br>', $label );
+			}
+
+			$html .= self::_get_field_description( $args );
+			$html .= '</fieldset>';
+
+			echo $html;
+		}
+
+        /**
+         * 多行文本框组件
+         *
+         * @since 1.0.0
+         *
+         * @param array $args {
+         *     @type string $name        字段名
+         *     @type string $section     区块ID
+         *     @type string $size        大小
+         *     @type string $placeholder placeholder属性值
+         *     @type string $desc        描述
+         * }
+         */
+		public function callback_textarea( $args ) {
+		    $value = $size = $name = '';
+		    if ( self::Setting === $this->type ) {
+    			$value       = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['std'] );
+    			$name        = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
+    			$size        = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
+		    } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
+		        $value = $args['value'];
+		        $size  = isset( $args['size'] ) && ! empty( $args['size'] ) ? $args['size'] : 'components-textarea-control__input css-1l8z26q-StyledTextarea-inputStyleNeutral-inputStyleFocus-inputControl ebk7yr50 widefat';
+				$name  = $args['name'];
+		    }
+		    $placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
+
+			$html = sprintf( '<textarea rows="5" cols="55" class="%1$s-text" id="%2$s" name="%2$s"%3$s>%4$s</textarea>', $size, $name, $placeholder, $value );
+			$html .= self::_get_field_description( $args );
+
+			echo $html;
+		}
+
+        /**
+         * 原生HTML组件
+         *
+         * @since 1.0.0
+         *
+         * @param array $args {
+         *     @type string $name        字段名
+         *     @type string $section     区块ID
+         *     @type string $html        HTML代码
+         * }
+         */
+		public function callback_html( $args ) {
+
+			echo $args['html'];
+		}
+
+        /**
+         * 颜色拾取组件
+         *
+         * @since 1.0.0
+         *
+         * @param array $args {
+         *     @type string $name        字段名
+         *     @type string $section     区块ID
+         *     @type string $size        大小
+         *     @type string $default     默认颜色
+         * }
+         */
+		public function callback_color( $args ) {
+			$value = $size = $name = '';
+		    if ( self::Setting === $this->type ) {
+    			$value = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['default'] );
+    			$name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
+    			$size  = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
+		    } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
+		        $value = $args['value'];
+		        $size  = isset( $args['size'] ) && ! empty( $args['size'] ) ? $args['size'] : 'widefat';
+				$name  = $args['name'];
+		    }
+	
+			$html  = sprintf( '<input type="text" class="%1$s-text wp-color-picker-field" id="%2$s" name="%2$s" value="%3$s" data-default-color="%4$s" />', $size, $name, $value, $args['default'] );
+			$html  .= self::_get_field_description( $args );
+	
+			echo $html;
+		}
+
+        /**
+         * 文件上传组件
+         *
+         * @since 1.0.0
+         *
+         * @param array $args {
+         *     @type string $name        字段名
+         *     @type string $section     区块ID
+         *     @type string $size        大小
+         *     @type string $std         未知属性
+         * }
+         */
+		public function callback_file( $args ) {
             $value = $size = $name = '';
-            if ( self::Setting === $this->type ) {
-                $value = self::get_option($args['name'], $args['prefix'], $args['section'], $args['default']);
-                $size  = isset($args['size']) && ! empty($args['size']) ? $args['size'] : 'regular';
-                $size .= '-text';
-                $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
-            } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
-                $value = $args['value'];
-                $size  = isset($args['size']) && ! empty($args['size']) ? $args['size'] : 'widefat';
-                $name  = $args['name'];
-            }
-            $placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
+		    if ( self::Setting === $this->type ) {
+    			$value = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['std'] );
+    			$name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
+    			$size  = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
+		    } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
+		        $value = $args['value'];
+		        $size  = isset( $args['size'] ) && ! empty( $args['size'] ) ? $args['size'] : 'widefat';
+				$name  = $args['name'];
+		    }
+    		$label = isset( $args['options']['button_label'] ) ? $args['options']['button_label'] : __( 'Choose File' );
+	
+			$html  = sprintf( '<input type="text" class="%1$s-text wpsa-url" id="%2$s" name="%2$s" value="%3$s"/>', $size, $name, $value );
+			$html  .= '<input type="button" class="button wpsa-browse" value="' . $label . '" />';
+			$html  .= self::_get_field_description( $args );
+	
+			echo $html;
+		}
 
-            $html        = sprintf( '<input type="text" class="%1$s" id="%2$s" name="%2$s" value="%3$s"%4$s/>',
-                $size, $name, $value, $placeholder );
-            $html       .= self::_get_field_description( $args );
-
-            echo $html;
-        }
-
-        function callback_select( $args ) {
-            $value = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['default'] );
-            $size  = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
-            $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
-
-            $html  = sprintf( '<select class="%1$s" name="%2$s" id="%2$s">', $size, $name );
-
-            foreach ( $args['options'] as $key => $label ) {
-                $html .= sprintf( '<option value="%s"%s>%s</option>', $key, selected( $value, $key, false ), $label );
-            }
-
-            $html .= sprintf( '</select>' );
-            $html .= $this->_get_field_description( $args );
-
-            echo $html;
-        }
-
-        function callback_switcher( $args ) {
-            $value = self::get_option($args['name'], $args['prefix'], $args['section']);
-            $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
-
-            $html  = '<fieldset>';
-            $html  .= sprintf( '<label for="wpf-%1$s">', $name );
-            $html  .= sprintf( '<input type="hidden" name="%1$s" value="off" />', $name );
-            $html  .= sprintf( '<input type="checkbox" class="checkbox" id="wpf-%1$s" name="%1$s" value="on" %2$s />', $name, checked( $value, 'on', false ) );
-            $html  .= sprintf( '%1$s</label>', $args['desc'] );
-            $html  .= '</fieldset>';
-
-            echo $html;
-        }
-
-        function callback_checkbox( $args ) {
-            $value = $this->get_option( $args['name'], $args['prefix'], $args['section'], $args['std'] );
-            $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
-
-            $html  = '<fieldset>';
-            $html .= sprintf( '<input type="hidden" name="%1$s" value="" />', $name );
-            foreach ( $args['options'] as $key => $label ) {
-                $checked = isset( $value[$key] ) ? $value[$key] : '0';
-                $html    .= sprintf( '<label for="wpf-%1$s[%2$s]">', $name, $key );
-                $html    .= sprintf( '<input type="checkbox" class="checkbox" id="wpf-%1$s[%2$s]" name="%1$s[%2$s]" value="%2$s" %3$s />', $name, $key, checked( $checked, $key, false ) );
-                $html    .= sprintf( '%1$s</label><br>',  $label );
-            }
-
-            $html .= $this->_get_field_description( $args );
-            $html .= '</fieldset>';
-
-            echo $html;
-        }
-
-        function callback_radio( $args ) {
-            $value = $this->get_option( $args['name'], $args['prefix'], $args['section'], $args['default'] );
-            $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
-            $html  = '<fieldset>';
-
-            foreach ( $args['options'] as $key => $label ) {
-                $html .= sprintf( '<label for="wpf-%1$s[%2$s]">',  $name, $key );
-                $html .= sprintf( '<input type="radio" class="radio" id="wpf-%1$s[%2$s]" name="%1$s" value="%2$s" %3$s />', $name, $key, checked( $value, $key, false ) );
-                $html .= sprintf( '%1$s</label><br>', $label );
-            }
-
-            $html .= $this->_get_field_description( $args );
-            $html .= '</fieldset>';
-
-            echo $html;
-        }
+        /**
+         * TinyMCE编辑器组件
+         *
+         * @since 1.0.0
+         *
+         * @param array $args {
+         *     @type string $name        字段名
+         *     @type string $section     区块ID
+         *     @type string $size        大小
+         *     @type string $std         未知属性
+         * }
+         */
+		public function callback_tinymce( $args ) {
+            $value = $size = $name = '';
+		    if ( self::Setting === $this->type ) {
+    			$value = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['std'] );
+    			$name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
+    			$size  = isset( $args['size'] ) && ! empty( $args['size'] ) ? $args['size'] : '500px';
+		    } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
+		        $value = $args['value'];
+		        $size  = isset( $args['size'] ) && ! empty( $args['size'] ) ? $args['size'] : '400px';
+				$name  = $args['name'];
+		    }
+	
+			echo '<div style="max-width: ' . $size . ';">';
+	
+			$editor_settings = array(
+				'teeny'         => true,
+				'textarea_name' => $name,
+				'textarea_rows' => 10
+			);
+	
+			if ( isset( $args['options'] ) && is_array( $args['options'] ) ) {
+				$editor_settings = array_merge( $editor_settings, $args['options'] );
+			}
+	
+			wp_editor( $value, $args['section'] . '-' . $args['name'], $editor_settings );
+	
+			echo '</div>';
+	
+			echo self::_get_field_description( $args );
+		}
 
         function callback_card( $args ) {
             $value = $this->get_option( $args['name'], $args['prefix'], $args['section'], $args['default'] );
@@ -300,6 +564,7 @@ if ( !class_exists( 'Fields' ) ) {
 		</script>
 <?php
         }
-
+      
     }
+  
 }
