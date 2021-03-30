@@ -549,6 +549,7 @@ if ( ! class_exists( Fields::class ) ) {
                 $(this).parent().parent().remove();
               })
             }
+            bindListener();
           </script>
             <?php
         }
