@@ -515,7 +515,7 @@ if ( ! class_exists( Fields::class ) ) {
           </style>
           <script>
             var $ = jQuery.noConflict();
-            var i = 1;
+            var i = 0;
             $('.add-card').on('click', function () {
               var html = '';
               html += `
@@ -526,7 +526,7 @@ if ( ! class_exists( Fields::class ) ) {
                   echo '<label>' . $field['label'] . '</label>';
                   echo '<aside>';
                   $field['prefix']  = $args['prefix'];
-                  $field['section'] = sprintf( '%s[%s][%s]', $args['section'], $args['name'], $card_id ) ?? '';
+                  $field['section'] = sprintf( '%s[%s][%s]', $args['section'], $args['name'], '`+ i +`' ) ?? '';
                   $field            = $this->parse_field_array( $field );
                   call_user_func( array( $this, 'callback_' . $field['type'] ), $field );
                   echo '</aside>';
