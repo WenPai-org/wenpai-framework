@@ -131,6 +131,22 @@ if ( ! class_exists( Fields::class ) ) {
             echo $html;
         }
 
+        public function callback_number( $args ) {
+            $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
+            $value = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['default'], $args['network'] );
+            $size        = isset( $args['size'] ) && !empty( $args['size'] ) ? $args['size'] : 'regular';
+            $type        = isset( $args['type'] ) ? $args['type'] : 'number';
+            $placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
+            $min         = ( $args['min'] == '' ) ? '' : ' min="' . $args['min'] . '"';
+            $max         = ( $args['max'] == '' ) ? '' : ' max="' . $args['max'] . '"';
+            $step        = ( $args['step'] == '' ) ? '' : ' step="' . $args['step'] . '"';
+
+            $html        = sprintf( '<input type="%1$s" class="%2$s-number" id="%3$s" name="%3$s" value="%4$s"%5$s%6$s%7$s%8$s/>', $type, $size, $name, $value, $placeholder, $min, $max, $step );
+            $html       .= $this->_get_field_description( $args );
+
+            echo $html;
+        }
+
         /**
          * 密码框组件
          *
