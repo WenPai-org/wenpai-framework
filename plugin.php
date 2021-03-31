@@ -39,11 +39,22 @@ Setting::create_section( EXAMPLE_PREFIX, array(
         'title'  => '选项卡一',
         'fields' => array(
             array(
-                'name'        => 'text_one',
+                'name'        => 'text',
                 'type'        => 'text',
                 'label'       => '文本框',
                 'placeholder' => '请输入文本',
                 'desc'        => '这是一个文本框',
+            ),
+            array(
+                'name'              => 'number',
+                'label'             => '数字框',
+                'placeholder'       => '请输入数字',
+                'desc'              => '这是一个数字框',
+                'min'               => 0,
+                'max'               => 100,
+                'step'              => '0.01',
+                'type'              => 'number',
+                'default'           => '1',
             ),
             array(
                 'name'        => 'password',
