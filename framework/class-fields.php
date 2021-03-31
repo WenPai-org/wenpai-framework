@@ -139,9 +139,9 @@ if ( ! class_exists( Fields::class ) ) {
             $size        = isset( $args['size'] ) && !empty( $args['size'] ) ? $args['size'] : 'regular';
             $type        = isset( $args['type'] ) ? $args['type'] : 'number';
             $placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
-            $min         = ( $args['min'] == '' ) ? '' : ' min="' . $args['min'] . '"';
-            $max         = ( $args['max'] == '' ) ? '' : ' max="' . $args['max'] . '"';
-            $step        = ( $args['step'] == '' ) ? '' : ' step="' . $args['step'] . '"';
+            $min         = ( $args['min'] === '' ) ? '' : ' min="' . $args['min'] . '"';
+            $max         = ( $args['max'] === '' ) ? '' : ' max="' . $args['max'] . '"';
+            $step        = ( $args['step'] === '' ) ? '' : ' step="' . $args['step'] . '"';
 
             $html        = sprintf( '<input type="%1$s" class="%2$s-number" id="%3$s" name="%3$s" value="%4$s"%5$s%6$s%7$s%8$s/>', $type, $size, $name, $value, $placeholder, $min, $max, $step );
             $html       .= $this->_get_field_description( $args );
