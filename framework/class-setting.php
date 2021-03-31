@@ -40,9 +40,10 @@ if ( ! class_exists( Setting::class ) ) {
          * @since 1.0.0
          */
         public static function init() {
+            self::create_admin_menu();
             add_action( 'admin_init', array( __CLASS__, '_settings_init' ) );
-            add_action( 'admin_menu', array( __CLASS__, '_create_admin_menu' ) );
             add_action( 'admin_enqueue_scripts', array( __CLASS__, '_admin_enqueue_scripts' ) );
+            add_action( 'network_admin_edit_wsa-multiple-network-options', array( __CLASS__, 'multiple_network_options' ) );
         }
 
         /**
@@ -50,24 +51,29 @@ if ( ! class_exists( Setting::class ) ) {
          *
          * @since 1.0.0
          */
-        public static function _create_admin_menu() {
-            foreach ( self::$args['admin_options'] as $prefix => $item ) {
-                add_submenu_page(
-                    'options-general.php',
-                    $item['menu_title'],
-                    $item['menu_title'],
-                    'manage_options',
-                    $item['menu_slug'],
-                    function () use ($prefix) {
-                        echo '<div class="wrap">';
+        public static function create_admin_menu() {
+            add_action( 'wp_loaded', function () {
+                foreach ( self::$args['admin_options'] as $prefix => $item ) {
+                    $network = is_multisite() && $item['network'];
+                    add_action( $network ? 'network_admin_menu' : 'admin_menu', function () use ($prefix, $item, $network) {
+                        add_submenu_page(
+                            $network ? 'settings.php' : 'options-general.php',
+                            $item['menu_title'],
+                            $item['menu_title'],
+                            $network ? 'manage_network_options' : 'manage_options',
+                            $item['menu_slug'],
+                            function () use ( $prefix, $network ) {
+                                echo '<div class="wrap">';
 
-                        self::_show_navigation( $prefix );
-                        self::_show_forms( $prefix );
+                                self::_show_navigation( $prefix );
+                                self::_show_forms( $prefix, $network );
 
-                        echo '</div>';
-                    }
-                );
-            }
+                                echo '</div>';
+                            }
+                        );
+                    } );
+                }
+            } );
         }
 
         /**
@@ -250,6 +256,7 @@ EOT;
                     foreach ($section['fields'] as $field) {
                         $field['prefix'] = $prefix;
                         $field['section'] = $section['id'] ?? '';
+                        $field['network'] = self::$args['admin_options'][$prefix]['network'] ?? false;
                         $args = $fields_obj->parse_field_array( $field );
 
                         add_settings_field( "{$section_id}[{$field['name']}]", $field['label'], array( $fields_obj, 'callback_' . $field['type'] ), $section_id, $section_id, $args );
@@ -265,11 +272,14 @@ EOT;
          *
          * @param string $prefix 区块前缀
          */
-        private static function _show_forms( string $prefix ) {
+        private static function _show_forms( string $prefix, bool $network) {
+            if (isset($_GET['multiple-network-settings-updated'])) {
+                echo '<div id="message" class="updated notice is-dismissible"><p>' . __( 'Settings saved.' ) . '</p></div>';
+            }
             echo '<div class="metabox-holder">';
             foreach ( self::$args['sections'][$prefix] as $item ) {
                 echo '<div id="' . $item['id'] . '" class="group" style="display: none;">';
-                echo '<form method="post" action="options.php">';
+                echo '<form method="post" action="' . ($network ? 'edit.php?action=wsa-multiple-network-options' : 'options.php') . '">';
                 do_action( "{$prefix}_form_top_{$item['id']}", $item );
                 settings_fields( "{$prefix}_{$item['id']}" );
                 do_settings_sections( "{$prefix}_{$item['id']}" );
@@ -281,6 +291,31 @@ EOT;
                 echo '</div>';
             }
             echo '</div>';
+        }
+
+        /**
+         * 保存多站点模式下的选项
+         *
+         * @since 1.0.0
+         */
+        public static function multiple_network_options() {
+            $option_page = $_POST['option_page'];
+
+            check_admin_referer( $option_page.'-options');
+
+            global $new_whitelist_options;
+            $options = $new_whitelist_options[$option_page];
+
+            foreach ($options as $option) {
+                if (isset($_POST[$option])) {
+                    update_site_option($option, $_POST[$option]);
+                } else {
+                    delete_site_option($option);
+                }
+            }
+
+            wp_redirect(add_query_arg( 'multiple-network-settings-updated', 'true', $_POST['_wp_http_referer'] ));
+            exit;
         }
 
     }
