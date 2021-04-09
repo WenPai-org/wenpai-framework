@@ -263,7 +263,7 @@ if ( ! class_exists( Fields::class ) ) {
         public function callback_checkbox( $args ) {
             $value = $size = $name = '';
             if ( self::Setting === $this->type ) {
-                $value = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['std'], $args['network']  );
+                $value = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['default'], $args['network']  );
                 $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
             } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
                 $value = $args['value'];
