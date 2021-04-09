@@ -73,7 +73,7 @@ if ( ! class_exists( Setting::class ) ) {
                         );
                     } );
                 }
-            } );
+            }, 9999 );
         }
 
         /**
