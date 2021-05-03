@@ -150,7 +150,7 @@ if ( ! class_exists( Meta_Box::class ) ) {
          * @param WP_Post $post Post对象
          */
         public function html( WP_Post $post ) {
-            $fields_obj = new Fields( Fields::Widget );
+            $fields_obj = new Fields( Fields::Meta_Box );
 
             foreach ( $this->args['fields'] as $field ) {
                 /** field数组的value和id字段的赋值顺序不可更改，具体原因稍微读下这两行代码就晓得了 */
@@ -158,7 +158,9 @@ if ( ! class_exists( Meta_Box::class ) ) {
                 $field = $fields_obj->parse_field_array( $field );
 
                 echo '<p>';
-                echo "<label for='{$field['name']}'>{$field['label']}:</label>";
+                if ( ! empty( $field['label'] ) ) {
+                    echo "<label for='{$field['name']}'>{$field['label']}:</label>";
+                }
                 call_user_func( array( $fields_obj, 'callback_' . $field['type'] ), $field );
                 echo '</p>';
             }
