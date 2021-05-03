@@ -126,6 +126,11 @@ if ( ! class_exists( Meta_Box::class ) ) {
          * @param int $post_id 文章ID
          */
         public function save( int $post_id ) {
+            /** TODO:这里是否需要验证nonce */
+            if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+                return $post_id;
+            }
+
             foreach ( $this->args['fields'] as $field ) {
                 if ( array_key_exists( $field['name'], $_POST ) ) {
                   /** TODO:POST数据需要消毒 */
