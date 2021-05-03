@@ -122,7 +122,7 @@ if ( ! class_exists( Fields::class ) ) {
                 $size  .= '-text';
                 $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
             } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
-                $value = $args['value'];
+                $value = $args['value'] ?: $args['default'];
                 $size  = isset( $args['size'] ) && ! empty( $args['size'] ) ? $args['size'] : 'widefat';
                 $name  = $args['name'];
             }
@@ -170,7 +170,7 @@ if ( ! class_exists( Fields::class ) ) {
                 $size  .= '-text';
                 $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
             } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
-                $value = $args['value'];
+                $value = $args['value'] ?: $args['default'];
                 $size  = isset( $args['size'] ) && ! empty( $args['size'] ) ? $args['size'] : 'widefat';
                 $name  = $args['name'];
             }
@@ -202,7 +202,7 @@ if ( ! class_exists( Fields::class ) ) {
                 $size  = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
                 $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
             } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
-                $value = $args['value'];
+                $value = $args['value'] ?: $args['default'];
                 $size  = isset( $args['size'] ) && ! empty( $args['size'] ) ? $args['size'] : 'widefat';
                 $name  = $args['name'];
             }
@@ -236,7 +236,7 @@ if ( ! class_exists( Fields::class ) ) {
                 $value = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['default'], $args['network'] );
                 $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
             } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
-                $value = $args['value'];
+                $value = $args['value'] ?: $args['default'];
                 $name  = $args['name'];
             }
 
@@ -268,7 +268,7 @@ if ( ! class_exists( Fields::class ) ) {
                 $value = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['default'], $args['network']  );
                 $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
             } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
-                $value = $args['value'];
+                $value = $args['value'] ?: $args['default'];
                 $name  = $args['name'];
             }
 
@@ -305,7 +305,7 @@ if ( ! class_exists( Fields::class ) ) {
                 $value = self::get_option( $args['name'], $args['prefix'], $args['section'], $args['default'], $args['network'] );
                 $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
             } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
-                $value = $args['value'];
+                $value = $args['value'] ?: $args['default'];
                 $name  = $args['name'];
             }
             $html = '<fieldset>';
@@ -341,7 +341,7 @@ if ( ! class_exists( Fields::class ) ) {
                 $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
                 $size  = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
             } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
-                $value = $args['value'];
+                $value = $args['value'] ?: $args['default'];
                 $size  = isset( $args['size'] ) && ! empty( $args['size'] ) ? $args['size'] : 'components-textarea-control__input css-1l8z26q-StyledTextarea-inputStyleNeutral-inputStyleFocus-inputControl ebk7yr50 widefat';
                 $name  = $args['name'];
             }
@@ -385,7 +385,7 @@ if ( ! class_exists( Fields::class ) ) {
                 $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
                 $size  = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
             } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
-                $value = $args['value'];
+                $value = $args['value'] ?: $args['default'];
                 $size  = isset( $args['size'] ) && ! empty( $args['size'] ) ? $args['size'] : 'widefat';
                 $name  = $args['name'];
             }
@@ -414,7 +414,7 @@ if ( ! class_exists( Fields::class ) ) {
                 $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
                 $size  = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
             } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
-                $value = $args['value'];
+                $value = $args['value'] ?: $args['default'];
                 $size  = isset( $args['size'] ) && ! empty( $args['size'] ) ? $args['size'] : 'widefat';
                 $name  = $args['name'];
             }
@@ -445,7 +445,7 @@ if ( ! class_exists( Fields::class ) ) {
                 $name  = "{$args['prefix']}_{$args['section']}[{$args['name']}]";
                 $size  = isset( $args['size'] ) && ! empty( $args['size'] ) ? $args['size'] : '500px';
             } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
-                $value = $args['value'];
+                $value = $args['value'] ?: $args['default'];
                 $size  = isset( $args['size'] ) && ! empty( $args['size'] ) ? $args['size'] : '400px';
                 $name  = $args['name'];
             }
