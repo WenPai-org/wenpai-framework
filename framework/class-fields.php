@@ -43,8 +43,10 @@ if ( ! class_exists( Fields::class ) ) {
             if ( ! empty( $args['desc'] ) ) {
                 if ( self::Setting === $this->type ) {
                     $desc = sprintf( '<p class="description">%s</p>', $args['desc'] );
-                } elseif ( self::Widget === $this->type || self::Meta_Box === $this->type ) {
+                } elseif ( self::Widget === $this->type ) {
                     $desc = sprintf( '<br /><small class="description">%s</small>', $args['desc'] );
+                } elseif ( self::Meta_Box === $this->type ) {
+                    $desc = sprintf( '<p class="howto" id="new-tag-post_tag-desc">%s</p>', $args['desc'] );
                 }
             } else {
                 $desc = '';
