@@ -26,7 +26,7 @@ if ( ! class_exists( Common::class ) ) {
          * @param string $file 插件的主文件绝对路径，“主文件”指编写插件Meta信息的文件
          * @param mixed $function 回调函数
          */
-        public static function active( string $file, $function ) {
+        public static function activate( string $file, $function ) {
             register_activation_hook( $file, $function );
         }
 
